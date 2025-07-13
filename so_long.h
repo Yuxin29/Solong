@@ -45,13 +45,14 @@ typedef struct s_map
 	int	dimention[2];
 	int	god_location[2];
 	int	exit_location[2];
-	char	**map;
+	char	**map_char;
+	char	*all_map_char;
 }		t_map;
 
 //parsing.c 
 static char	**get_map(file xxx.ber)		//using gnl to get the t_map.map
-static int	*get_dimention(char **map)		//getting dimentions of the map
-static int	*get_location(char **map, char c)  //getting exit/god_location[2] from **map
+static int	*get_dimention(int	dimention[2], char **map_char)		//getting dimentions of the map
+static int	*get_location(char **map_char, char c)  //getting exit/god_location[2] from **map
 t_map	get_tmap(file xxx.ber) //in this one, call all fts as above
 
 //inputcheck.c
@@ -59,19 +60,22 @@ t_map	get_tmap(file xxx.ber) //in this one, call all fts as above
 //varify exutability
 
 //mapcheck.c
-//element check: a map must contain 1 exit, 1 starting position and at least 1 collectible.
-static int	check_elements(char **map);	
+//element check: a map must contain 1 exit, 1 starting position and at least 1 collectible, and no empty space.
+int	check_elements(char *all_map_char);	
+
+
 //The map must be rectangular. return int as signals,
-static int	check_rectangular(char **map)
-//element check: a map must contain no empty space.
-static int	check_empty(char **map);
+int	check_rectangular(char **map_char)
 //The map must be enclosed/surrounded by walls.
-static int	check_closure(char **map);
+int	check_closure(char **map_char);
 //The map cannnot be too big
-static int	check_size(char **map);
+int	check_size(char **map_char);
 //All the collectable and the exit need to be accessible
 static int	check_accessibility
-int	check_all(char **map) //call all the functions above and return int as signal to error msg part
+int	check_all(char **map_char) //call all the functions above and return int as signal to error msg part
+
+//error.c
+void	send_err_msg(int	n)// this one send error msg according the the return int of check_all
 
 //execution.c
 
