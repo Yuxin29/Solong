@@ -12,8 +12,17 @@
 
 #include "so_long.h"
 
-//using gnl to get the t_map.map
-static char	**get_map(file xxx.ber)	
+//using gnl to get the t_map.map_char
+static void	get_2d_map(t_map mp, char *file_name)
+{
+
+}
+
+//using gnl to get the t_map.map_char
+static void	get_1d_map(t_map mp)
+{
+    
+}
 
 //getting dimentions of the map
 //shoudl I malloc here or not
@@ -49,4 +58,18 @@ static int	*get_location(char **map_char, char c)
     return {i, j};
 }
 
-t_map	get_tmap(file xxx.ber) //in this one, call all fts as above
+//in this one, malloc and call all fts as above
+t_map	malloc_tmap(void)
+{
+    t_map   mp;
+
+    mp = malloc(sizeof(t_map) * 1)
+    if (!mp)
+        return(NULL);
+    mp->dimension = {0, 0};
+    mp->start_location = {0, 0};
+    mp->player_location = {0, 0};
+    mp->exit_location = {0, 0};
+    map->2d_char=NULL;
+    map->1d_char=NULL;
+}

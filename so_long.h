@@ -42,28 +42,34 @@
 
 typedef struct s_map
 {
-	int	dimention[2];
-	int	god_location[2];
+	int	dimension[2];
+	int	start_location[2];
+	int	player_location[2];
 	int	exit_location[2];
-	char	**map_char;
-	char	*all_map_char;
+	char	**2d_char;
+	char	*1d_char;
 }		t_map;
 
 //parsing.c 
 static char	**get_map(file xxx.ber)		//using gnl to get the t_map.map
-static int	*get_dimention(int	dimention[2], char **map_char)		//getting dimentions of the map
-static int	*get_location(char **map_char, char c)  //getting exit/god_location[2] from **map
-t_map	get_tmap(file xxx.ber) //in this one, call all fts as above
+static int	get_dimension(int	dimention[2], char **map_char)		//getting dimentions of the map
+static int	get_location(int	location[2], char **map_char, char c)  //getting exit/player_location[2] from **map
+t_map	malloc_tmap(void); //in this one, malloc and call all fts as above
 
 //inputcheck.c
 //You must verify if there is a valid path in the map.
 //varify exutability
+int	check_file(char *filename);
+{
+	//if not exucutable
+		return(1)
+	//if ok;
+		return (0);
+}
 
 //mapcheck.c
 //element check: a map must contain 1 exit, 1 starting position and at least 1 collectible, and no empty space.
 int	check_elements(char *all_map_char);	
-
-
 //The map must be rectangular. return int as signals,
 int	check_rectangular(char **map_char)
 //The map must be enclosed/surrounded by walls.
@@ -71,16 +77,44 @@ int	check_closure(char **map_char);
 //The map cannnot be too big
 int	check_size(char **map_char);
 //All the collectable and the exit need to be accessible
-static int	check_accessibility
-int	check_all(char **map_char) //call all the functions above and return int as signal to error msg part
-
+static int	check_accessibility(char **map_char);
+//call all the functions above and return int as signal to error msg part
+int	check_map_all(char **map_char, char *all_map_char);
 //error.c
 void	send_err_msg(int	n)// this one send error msg according the the return int of check_all
+void	free_t_map(t_map	map);
 
 //execution.c
 
-//helper.c
-
 //main.c
+int	main(int ac, char **av)
+{
+	t_map	mp;
+	int		mp_checker;
 
+	if (ac != 2)
+	{
+		//err_msg: wrong ac nbr
+		return (1);
+	}
+	if (check_file)
+	{
+		//err_msg: not valid file/path/ecutable
+		return (1);
+	}
+	mp = get_map(argc[1])
+	if (!mp)
+	{
+		//err_msg: getting map failed
+		return (1);
+	}
+	mp_checker = check_map_all(mp->map_char, mp->all_map_char)
+	if (all_map_char)
+	{
+		send_err_msg(map_checker);
+		return (1);
+	}
+	//getting texture and excucat
+	return(0):
+}
 # endif
