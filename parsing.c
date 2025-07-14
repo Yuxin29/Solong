@@ -12,21 +12,18 @@
 
 #include "so_long.h"
 
-//using gnl to get the t_map.map_char
-static void	get_2d_map(t_map mp, char *file_name)
-{
-
-}
 
 //using gnl to get the t_map.map_char
-static void	get_1d_map(t_map mp)
+//maybe this one first, it will get 1_d array of the chars with '/t' in the middle
+//using gnl to get the t_map.map_char
+static void	get_map_array(t_map mp, char *file_name)
 {
-    
+    //first initiate mp->1d_array
+    //then get 2d_array from 1_d array
 }
 
 //getting dimentions of the map
-//shoudl I malloc here or not
-static int	*get_dimention(int	dimention[2], char **map_char)
+static void	get_dimention(t_map mp)
 {
     int i;
     int j;
@@ -35,31 +32,38 @@ static int	*get_dimention(int	dimention[2], char **map_char)
     j = 0;
     while (map_char[i][j])
         j++;
+    mp->dimension[0] = i;
     i++;
     while (map_char[i])
         i++;
-    return {i, j};
+    mp->dimension[1] = j;
 }
 
 //getting exit/god_location[2] from **map
-static int	*get_location(char **map_char, char c)
+static void	get_location(t_map mp)
 {
     int i;
     int j;
 
     i = 0;
-    while (map_char[i])
+    while (mp->2d_arr[i])
     {
         j = 0;
-        while (map_char[i][j])
-            j++
+        while (mp->2d_arr[i][j])
+        {
+            //here 
+            if (mp->2d_arr[i][j] = 'P')
+                mp->player_location = {i, j};
+            if (mp->2d_arr[i][j] = 'E')
+                mp->exit_location = {i, j};
+            j++;    
+        }
         i++;
     }
-    return {i, j};
 }
 
-//in this one, malloc and call all fts as above
-t_map	malloc_tmap(void)
+//malloc for t_mao, and initiate every variables here
+t_map   *init_map(char *file_name)
 {
     t_map   mp;
 
@@ -72,4 +76,7 @@ t_map	malloc_tmap(void)
     mp->exit_location = {0, 0};
     map->2d_char=NULL;
     map->1d_char=NULL;
+    get_map_array(mp, file_name);
+    get_dimention(t_map mp);
+    get_location(t_map mp);
 }

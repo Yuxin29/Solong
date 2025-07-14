@@ -23,6 +23,7 @@
 #ifndef SO_LONG
 # define SO_LONG
 
+---------------------------------------------------
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -34,6 +35,7 @@
 # define WALL "path to wall.jpg"
 # define FISH "path to fish.jpg"
 # define DOOR "path to door.jpg"
+
 //0 for an empty space,
 //1 for a wall,		
 //C for a collectible,
@@ -43,18 +45,22 @@
 typedef struct s_map
 {
 	int	dimension[2];
-	int	start_location[2];
 	int	player_location[2];
 	int	exit_location[2];
-	char	**2d_char;
-	char	*1d_char;
+	char	**2d_arr;
+	char	*1d_arr;
 }		t_map;
 
+------------------------------------
 //parsing.c 
-static char	**get_map(file xxx.ber)		//using gnl to get the t_map.map
-static int	get_dimension(int	dimention[2], char **map_char)		//getting dimentions of the map
-static int	get_location(int	location[2], char **map_char, char c)  //getting exit/player_location[2] from **map
-t_map	malloc_tmap(void); //in this one, malloc and call all fts as above
+//maybe this one first, it will get 1_d array of the chars with '/t' in the middle
+static void	get_map_array(t_map mp, char *file_name);
+//getting dimentions of the map
+static void	get_dimention(t_map mp);
+//getting player/exit_location[2] from **map
+static void	get_location(t_map mp);
+//malloc for t_mao, and initiate every variables here
+t_map   *init_map(char *file_name);
 
 //inputcheck.c
 //You must verify if there is a valid path in the map.
@@ -69,52 +75,31 @@ int	check_file(char *filename);
 
 //mapcheck.c
 //element check: a map must contain 1 exit, 1 starting position and at least 1 collectible, and no empty space.
-int	check_elements(char *all_map_char);	
+int	check_elements(t_map mp);	//11  1 as error and  0 as ok
 //The map must be rectangular. return int as signals,
-int	check_rectangular(char **map_char)
+int	check_rectangular(t_map mp)	//12,  0 as ok
 //The map must be enclosed/surrounded by walls.
-int	check_closure(char **map_char);
-//The map cannnot be too big
-int	check_size(char **map_char);
+int	check_closure(t_map mp); //13,  0 as ok
+//The map cannnot be too big	
+int	check_size(t_map mp);	//14,  0 as ok
 //All the collectable and the exit need to be accessible
-static int	check_accessibility(char **map_char);
-//call all the functions above and return int as signal to error msg part
-int	check_map_all(char **map_char, char *all_map_char);
-//error.c
-void	send_err_msg(int	n)// this one send error msg according the the return int of check_all
-void	free_t_map(t_map	map);
+static int	check_accessibility(t_map mp);	//15,  0 as ok
 
 //execution.c
+//floodfill here???
+//library here
+
+//error.c
+// this one send error msg according the the return int of check_all and exit with 1
+void	errmsg_and_exit(char *msg, int	n);
+//clean up and free things
+void	free_t_map(t_map	map);
+//this err exit happens after malloc, so it includes free, err mags and exit code
+void	free_errmsg_and_exit(t_map	map, int map_error, int	n);
 
 //main.c
+//I am not sure should I exit or shoud I exit with some error code here???
 int	main(int ac, char **av)
-{
-	t_map	mp;
-	int		mp_checker;
+------------------------------------------------------
 
-	if (ac != 2)
-	{
-		//err_msg: wrong ac nbr
-		return (1);
-	}
-	if (check_file)
-	{
-		//err_msg: not valid file/path/ecutable
-		return (1);
-	}
-	mp = get_map(argc[1])
-	if (!mp)
-	{
-		//err_msg: getting map failed
-		return (1);
-	}
-	mp_checker = check_map_all(mp->map_char, mp->all_map_char)
-	if (all_map_char)
-	{
-		send_err_msg(map_checker);
-		return (1);
-	}
-	//getting texture and excucat
-	return(0):
-}
 # endif
