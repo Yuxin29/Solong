@@ -70,7 +70,7 @@ int	check_rectangular(t_map mp)
 }
 
 //The map must be enclosed/surrounded by walls.
-static int	check_closure(t_map *mp)
+int	check_closure(t_map *mp)
 {
 	int	w;
 	int	h;
@@ -101,13 +101,13 @@ static int	check_closure(t_map *mp)
 }
 
 //The map cannnot be too big
-static int	check_size(t_map mp);
+int	check_size(t_map mp);
 {
 	//return signals: 1 as error and  0 as ok
 }
 
 //All the collectable and the exit need to be accessible
-static int	check_accessibility(t_map mp);
+int	check_accessibility(t_map mp);
 {
 	//I do I check this???
 	//I can get the nbr of collectables

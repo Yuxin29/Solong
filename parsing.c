@@ -71,7 +71,16 @@ static void	get_location(t_map mp)
     }
 }
 
-static void  malloc_and_dimention(t_map mp, char *file_name)
+void    get_collectable_nbr(t_map mp)
+{
+    int counter;
+
+    couter = 0;
+    //just go through all the mp->1d_arr and count all 'C'
+    mp->counter[1] = couter;
+}
+
+void  malloc_and_dimention(t_map mp, char *file_name)
 {
     int     line_count;
     int     char_count;
@@ -115,6 +124,8 @@ t_map   *init_map(char *file_name)
     mp->player_location[1] = 0;
     mp->player_location[0] = 0;
     mp->player_location[1] = 0;
+    mp->counter[0] = 0;
+    mp->counter[1] = 0;
     mp->1d_arr = NULL;
     mp->2d_arr = NULL;
     malloc_and_dimention(mp, file_name);

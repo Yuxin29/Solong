@@ -10,6 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "so_long.h"
+
+int	check_file(char *file_name)
+{
+	if (access(file_name, F_OK) != 0)
+		return (1);
+	if (access(file_name, R_OK) != 0)
+		return (0);
+	return (0);
+}
+
 //call all the functions above and return int as signal to error msg part
 int	check_map_all(t_map mp);
 {
@@ -36,7 +47,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		err_and_exit("wrong argument number", 1);
 	if (check_file)
-		err_and_exit("not valid file/path/ecutable", 1);
+		err_and_exit("not existing/readable", 1);
 	mp = init_map(argc[1])
 	if (!mp)
 		err_and_exit("initiate map failed", 1);
