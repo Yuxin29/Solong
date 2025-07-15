@@ -13,16 +13,16 @@
 #include "so_long.h"
 
 //this is a static helper to check how many times one element appears in this map
-static int      check_one_elements(char c, char *all_map_char)
+static int      check_one_elements(char c, t_map *mp)
 {
 	int	i;
 	int	counter;
 
 	i = 0;
 	counter = 0;
-	while (all_map_char[i])
+	while (mp->1d_arr[i])
 	{
-		if (all_map_char[i] = 'P')
+		if (mp->1d_arr[i] == 'P')
 			counter++; 
 		i++;
 	}
@@ -33,43 +33,76 @@ static int      check_one_elements(char c, char *all_map_char)
 //C for a collectible,
 //E for a map exit,
 //P for the player’s starting position.
-static int	check_elements(t_map mp);	
+int	check_elements(t_map mp);	
 {
 	int	counter_p;
 	int	counter_c;
 	int	counter_e;
 	int	counter_empty;
 
-	counter_p = check_one_elements('P', all_map_char);
-	counter_c = check_one_elements('C', all_map_char);
-	counter_e = check_one_elements('E', all_map_char);
-	counter_empty = check_one_elements(' ', all_map_char);
+	counter_p = check_one_elements('P', mp);
+	counter_c = check_one_elements('C', mp);
+	counter_e = check_one_elements('E', mp);
+	counter_empty = check_one_elements(' ', mp);
 	if (counter_p != 1 || counter_c != 1 || counter_e != 1 )
 		return (1);
 	if (counter_empty !)
 		return (1); //should I use another signal here??? I will think about it in error msg later
-	return ()
+	return (0);
 }
 //The map must be rectangular. return int as signals,
-static int	check_rectangular(t_map mp)
+int	check_rectangular(t_map mp)
 {
 	int	line_width;
 	int	line_nbr;
 
-	//it went though all the lines and check if every line_width is the same
-	//return signals: 1 as error and  0 as ok
+	line_nbr = 0;
+	while (line_nbr < mp->dimension[0])
+	{
+		line_width = 0;
+		while (line_width < mp->dimension[1])
+			line_width++;
+		if line_width != mp->dimension[1]
+			retrun(1);
+		line_nbr++;
+	}
+	return (0);
 }
 
 //The map must be enclosed/surrounded by walls.
-static int	check_closure(t_map mp);
+static int	check_closure(t_map *mp)
 {
+	int	w;
+	int	h;
 
-	//return signals: 1 as error and  0 as ok
+	w = 0;
+	while (mp->2d_arr[0][w])
+	{
+		if (mp->2d_arr[0][w] != '1')
+			return (1);
+		w++;
+	}
+	h = mp->dimension[0] - 1;
+	w = 0;
+	while (mp->2d_arr[h][w])
+	{
+		if (mp->2d_arr[h][w] != '1')
+			return (1);
+		w++;
+	}
+	h = 0;
+	while (h < mp->dimension[0])
+	{
+		if (mp->2d_arr[h][0] != '1' || mp->2d_arr[h][mp->dimension[1] - 1] != '1')
+			return (1);
+		h++;
+	}
+	return (0);
 }
+
 //The map cannnot be too big
 static int	check_size(t_map mp);
 {
-	//related to the pixels of the jpg elements and the resolutions of the specific screen
 	//return signals: 1 as error and  0 as ok
 }
 
@@ -80,22 +113,4 @@ static int	check_accessibility(t_map mp);
 	//I can get the nbr of collectables
 	//Do I go to each of them and check if it is soroounded?
 	//Do I need another static checker for soroundability???
-}
-
-//call all the functions above and return int as signal to error msg part
-int	check_map_all(t_map mp);
-{
-	if (check_elements(mp))
-		return (11);
-	if (check_rectangular(mp))
-		return (12);
-	if (check_closure(mp))
-		return (13);
-	if (check_size(mp))
-		return (14);
-	if (check_accessibility(mp))
-		return (15);
-	//if (check_other(mp)???)
-	//	return (16);
-	//....
 }

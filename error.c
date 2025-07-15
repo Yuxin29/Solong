@@ -45,6 +45,6 @@ void	free_errmsg_and_exit(t_map	map, int map_error, int	n);
 	///
 	else if (map_error ==  xxx)
 		//putstr("xxxxxxxx")
-	
+
 }
 

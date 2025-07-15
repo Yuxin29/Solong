@@ -47,19 +47,15 @@ typedef struct s_map
 	int	dimension[2];
 	int	player_location[2];
 	int	exit_location[2];
-	char	**2d_arr;
 	char	*1d_arr;
+	char	**2d_arr;
 }		t_map;
 
 ------------------------------------
 //parsing.c 
-//maybe this one first, it will get 1_d array of the chars with '/t' in the middle
-static void	get_map_array(t_map mp, char *file_name);
-//getting dimentions of the map
-static void	get_dimention(t_map mp);
-//getting player/exit_location[2] from **map
-static void	get_location(t_map mp);
-//malloc for t_mao, and initiate every variables here
+//malloc arrays here
+static void  malloc_and_dimention(t_map mp, char *file_name)
+//malloc for t_map, and initiate every variables here
 t_map   *init_map(char *file_name);
 
 //inputcheck.c
@@ -98,6 +94,8 @@ void	free_t_map(t_map	map);
 void	free_errmsg_and_exit(t_map	map, int map_error, int	n);
 
 //main.c
+//call all the functions above and return int as signal to error msg part
+int	check_map_all(t_map mp);
 //I am not sure should I exit or shoud I exit with some error code here???
 int	main(int ac, char **av)
 ------------------------------------------------------
