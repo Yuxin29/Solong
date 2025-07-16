@@ -14,11 +14,14 @@ NAME := so_long
 CFLAGS := -Wall -Wextra -Werror -g
 CC := cc
 
-SRCS := xxx.c xxx.c xxx.c
+SRCS := parsing.c mapcheck.c init_mlx.c play_move.c error.c main.c
 OBJS := $(SRCS:%.c=%.o)
 
-LIBFT_PATH := ./get_next_line/
+LIBFT_PATH := ./libft/
 LIBFT := $(LIBFT_PATH)libft.a
+
+#LIBFT_PATH := ./get_next_line/
+#LIBFT := $(LIBFT_PATH)libft.a
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
