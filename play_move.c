@@ -12,54 +12,105 @@
 
 #include "so_long.h"
 
-/* ******player control and game processing-------player_move.c******************* */
-void	keyboard_control(int	key, t_map mp);
+//this should be called every time when a solid move is made
+void	print_steps(t_map *mp)
 {
-	int	x;
-	int	y;
-
-	x = mp->player_locationp[1];
-	y = mp->player_locationp[0];  //initial location of the play
-
-	if (key == KEY_ESC)
-		quit_by_player();
-	if (key == KEY_UP  && mp->2d_arr[y - 1][x] != '1' )
-		mp->player_locationp[0] -= 1;
-	else if (key == KEY_DOWN && mp->2d_arr[y + 1][x] != '1'))
-		mp->player_locationp[0] += 1;
-	if (key == KEY_LEFT && mp->2d_arr[y][x - 1] != '1')
-		mp->player_locationp[1] -= 1;
-	else if (key == KEY_RIGHT && mp->2d_arr[y][x + 1] != '1')
-		mp->player_locationp[1] += 1;
-	map_collectable_refill(mp, x_new, y_new);
-	finish_game_by_player(mp, x_new, y_new);
+	mp->steps++;
+	ft_putnbr_fd(mp->steps, 1);
+	ft_putchar_fd('\n', 1);
 }
 
-//the map should be changing with the player movement
-void	map_collectable_refill(t_map mp, int x_new, int y_new)
+//be called every time when the keyboard control turned out to be a valid one
+void	map_normal_move(t_map *mp, int x, int y)
 {
-	int	y = mp->player_location[0];
-	int	x = mp->player_location[1];
+	mp->player_inst->instances[0].x = x * IMGSIZE;
+	mp->player_inst->instances[0].y = y * IMGSIZE;
+}
 
-	if (mp->2d_arr[y_new][x_new] == 'C')
+//when the keyboard control turn out to be towards a collectable?
+void	map_collecting_move(t_map *mp, int x, int y)
+{
+	int	i;
+
+	i = 0;
+	if (mp->arr_2d[y][x] == 'C')
 	{
-		mp->counterp[0]++;
-		mp->2d_arr[y_new][x_new] = '0';
-		//call print_collects(void)
+		mp->counter[0]++;
+		mp->arr_2d[y][x] = '0';
+		i = 0;
+		while (i < mp->counter[0])
+		{
+			if (mp->tex->img_collectable->instances[i].x == x * IMGSIZE)
+			{
+				if (mp->tex->img_collectable->instances[i].y == y * IMGSIZE)
+				{
+					mp->tex->img_collectable->instances[i].enabled = false;
+					break ;
+				}
+			}
+			i++;
+		}
 	}
 }
 
-void	print_collects(void)
+//end game after collecting every thing and enter exit
+void	map_exit_move(t_map *mp, int x, int y)
 {
-	//
+	if (mp->arr_2d[y][x] == 'E' && mp->counter[0] == mp->counter[1])
+	{
+		ft_putstr_fd("Victory\n", 1);
+		mlx_close_window(mp->mlx);
+		free_t_map(mp);
+	}
 }
 
-//end game
-void	finish_game_by_player(t_map mp, int x_new, int y_new)
+//this checks the move and if it is valid, and what kind of move it is,
+void	keyboard_control(mlx_key_data_t	keydata, void *param)
 {
-	int	y = mp->player_location[0];
-	int	x = mp->player_location[1];
+	t_map	*mp;
+	int		x;
+	int		y;
+	int		x_new;
+	int		y_new;
 
-	if (mp->2d_arr[y][x] == 'E' && mp->counterp[0] == mp->counterp[1])
-		finish_game(mp);
+	mp = (t_map *)param;
+	x = mp->player_location[1];
+	y = mp->player_location[0];
+	x_new = x;
+	y_new = y;
+	if (keydata.key == MLX_KEY_ESCAPE)
+	{
+		mlx_close_window(mp->mlx);
+		free_t_map(mp);
+		return ;
+	}
+	else if (keydata.key == MLX_KEY_UP)
+		y_new = y - 1;
+	else if (keydata.key == MLX_KEY_DOWN)
+		y_new = y + 1;
+	else if (keydata.key == MLX_KEY_LEFT)
+		x_new = x - 1;
+	else if (keydata.key == MLX_KEY_RIGHT)
+		x_new = x + 1;
+	else
+		return ;
+	if (mp->arr_2d[y_new][x_new] == '1')
+		return ;
+	mp->player_location[0] = y_new;
+	mp->player_location[1] = x_new;
+	map_normal_move(mp, x_new, y_new);
+	map_collecting_move(mp, x_new, y_new);
+	map_exit_move(mp, x_new, y_new);
+	print_steps(mp);
 }
+
+// a structruct by mlx42
+/*
+typedef struct s_mlx_key_data {
+    keys_t  key;      // The key that was pressed (e.g. MLX_KEY_W, MLX_KEY_UP)
+    action_t action;  // The action (press, release, repeat)
+    mods_t  modifiers; // Modifier keys (Shift, Ctrl, etc.)
+} mlx_key_data_t;
+
+void *param
+*/

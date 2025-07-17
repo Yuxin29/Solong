@@ -20,10 +20,10 @@ int	check_one_elements(char c, t_map *mp)
 
 	i = 0;
 	counter = 0;
-	while (mp->1d_arr[i])
+	while (mp->arr_1d[i])
 	{
-		if (mp->1d_arr[i] == 'c')
-			counter++; 
+		if (mp->arr_1d[i] == c)
+			counter++;
 		i++;
 	}
 	return (counter);
@@ -33,7 +33,7 @@ int	check_one_elements(char c, t_map *mp)
 //C for a collectible,
 //E for a map exit,
 //P for the player’s starting position.
-int	check_elements(t_map *mp);	
+int	check_elements(t_map *mp)
 {
 	int	counter_p;
 	int	counter_c;
@@ -44,7 +44,7 @@ int	check_elements(t_map *mp);
 	counter_c = check_one_elements('C', mp);
 	counter_e = check_one_elements('E', mp);
 	counter_empty = check_one_elements(' ', mp);
-	if (counter_p != 1 || counter_c < 1 || counter_e != 1 )
+	if (counter_p != 1 || counter_c < 1 || counter_e != 1)
 		return (1);
 	if (counter_empty)
 		return (1);
@@ -55,17 +55,17 @@ int	check_elements(t_map *mp);
 int	check_rectangular(t_map *mp)
 {
 	int	line_width;
-	int	line_nbr;
+	int	i;
 
-	line_nbr = 0;
-	while (line_nbr < mp->dimension[0])
+	i = 0;
+	while (mp->arr_2d[i])
 	{
-		line_width = 0;
-		while (line_width < mp->dimension[1])
-			line_width++;
-		if line_width != mp->dimension[1]
-			retrun(1);
-		line_nbr++;
+		line_width = ft_strlen(mp->arr_2d[i]);
+		if (mp->arr_2d[i][line_width] == '\n')
+			line_width--;
+		if (line_width != mp->dimension[1])
+			return (1);
+		i++;
 	}
 	return (0);
 }
@@ -77,34 +77,38 @@ int	check_closure(t_map *mp)
 	int	h;
 
 	w = 0;
-	while (mp->2d_arr[0][w])
+	while (mp->arr_2d[0][w])
 	{
-		if (mp->2d_arr[0][w] != '1')
+		if (mp->arr_2d[0][w] != '1')
 			return (1);
 		w++;
 	}
 	h = mp->dimension[0] - 1;
 	w = 0;
-	while (mp->2d_arr[h][w])
+	while (mp->arr_2d[h][w])
 	{
-		if (mp->2d_arr[h][w] != '1')
+		if (mp->arr_2d[h][w] != '1')
 			return (1);
 		w++;
 	}
 	h = 0;
 	while (h < mp->dimension[0])
 	{
-		if (mp->2d_arr[h][0] != '1')
+		if (mp->arr_2d[h][0] != '1')
 			return (1);
-		if (mp->2d_arr[h][mp->dimension[1] - 1] != '1')
-                        return (1);
+		if (mp->arr_2d[h][mp->dimension[1] - 1] != '1')
+			return (1);
 		h++;
 	}
 	return (0);
 }
 
 //The map cannnot be too big
-int	check_size(t_map *mp);
+int	check_size(t_map *mp)
 {
-	//return signals: 1 as error and  0 as ok
+	if (mp->dimension[0] > WIN_MAX_H / IMGSIZE)
+		return (1);
+	if (mp->dimension[1] > WIN_MAX_W / IMGSIZE)
+		return (1);
+	return (0);
 }

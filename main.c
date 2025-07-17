@@ -21,39 +21,39 @@ int	check_file(char *file_name)
 	return (0);
 }
 
-//call all the functions above and return int as signal to error msg part
-int	check_map_all(t_map mp);
+/*
+int	main(void)
 {
-	if (check_elements(mp))
-		return (11);
-	if (check_rectangular(mp))
-		return (12);		/this has to be check first
-	if (check_closure(mp))
-		return (13);
-	if (check_size(mp))
-		return (14);
-	if (check_accessibility(mp))
-		return (15);
-	//....
-	//if (check_other(mp)???)
-	//	return (16);
+	mlx_t *mlx = mlx_init(300, 300, "Test Window", false);
+	if (!mlx)
+		return (1);
+
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+	return (0);
 }
+*/
 
 int	main(int ac, char **av)
 {
-	t_map	mp;
-	int		map_error;
+	t_map	*mp;
 
+	mp = NULL;
 	if (ac != 2)
-		err_and_exit("wrong argument number", 1);
-	if (check_file)
-		err_and_exit("not existing/readable", 1);
-	mp = init_map(argc[1])
+		errmsg_and_exit("wrong argument number\n", mp);
+	if (check_file(av[1]))
+		errmsg_and_exit("not existing/readable1\n", mp);
+	mp = init_map(av[1]);
 	if (!mp)
-		err_and_exit("initiate map failed", 1);
-	map_error = check_map_all(mp->map_char, mp->all_map_char)
-	if (map_error)
-		free_errmsg_and_exit(map, map_error, 1);
-	//getting texture and excucate here, flood fill the map array with my picture, I DONT KNOW HOW TO DO IT YET
-	return(0):
+		errmsg_and_exit("initiate map failed\n", mp);
+	check_map_all(mp);
+	mlx_new_window(mp);
+	texture_path(mp);
+	init_instances(mp);
+	mlx_key_hook(mp->mlx, keyboard_control, mp);
+	ft_putstr_fd("Entering mlx loop\n", 1);
+	mlx_loop(mp->mlx);
+	mlx_terminate(mp->mlx);
+	free_t_map(mp);
+	return (0);
 }

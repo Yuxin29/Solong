@@ -12,70 +12,67 @@
 
 #include "so_long.h"
 
-static void *mlx_ptr;
-static void *win_ptr;
-void mlx_new_window(t_map *mp)
+void	mlx_new_window(t_map *mp)
 {
-    int win_w;
-    int win_h;
-    
-    win_w = mp->dimension[1] * IMGSIZE;
-    win_h = mp->dimension[0] * IMGSIZE;
-    mlx_ptr = mlx_init();  //system call from minilibx
-    if (!mlx_ptr)
-        // handle error, I am not sure here, shoud I exit and free here as well
-        errmsg_and_exit("MLX initialization failed", 1);
-    win_ptr = mlx_new_window(mlx_ptr, win_w, win_h, "so_long");
-    if (!win_ptr)
-        errmsg_and_exit("Window creation failed", 1);
+	int	win_w;
+	int	win_h;
+
+	win_w = mp->dimension[1] * IMGSIZE;
+	win_h = mp->dimension[0] * IMGSIZE;
+	mp->mlx = mlx_init(win_w, win_h, "so long", false);
+	if (!mp->mlx)
+		errmsg_and_exit("MLX initialization failed\n", mp);
 }
 
-static void *img_wall;
-static void *img_player;
-static void *img_collectible;
-static void *img_exit;
-static void *space;
-//load images here
-void img_path(void)
+void	texture_path(t_map *mp)
 {
-    img_space = mlx_xpm_file_to_image(mlx_ptr, SPACE, IMGSIZE, IMGSIZE);
-    img_wall = mlx_xpm_file_to_image(mlx_ptr, WALL, IMGSIZE, IMGSIZE);
-    img_player = mlx_xpm_file_to_image(mlx_ptr, PLAYER, IMGSIZE, IMGSIZE);
-    img_collectible = mlx_xpm_file_to_image(mlx_ptr, COLL, IMGSIZE, IMGSIZE);
-    img_exit = mlx_xpm_file_to_image(mlx_ptr, EXIT, IMGSIZE, IMGSIZE);
+	mlx_t	*mlx;
 
-    if (!img_wall || !img_player || !img_collectible || !img_exit || !img_floor)
-        errmsg_and_exit("Failed to load images", 1);
+	mlx = mp->mlx;
+	mp->tex->img_wall = mlx_texture_to_image(mlx, mlx_load_png(WALL));
+	mp->tex->img_empty = mlx_texture_to_image(mlx, mlx_load_png(SPACE));
+	mp->tex->img_exit = mlx_texture_to_image(mlx, mlx_load_png(EXIT));
+	ft_putstr_fd("load exit\n", 1);
+	mp->tex->img_player = mlx_texture_to_image(mlx, mlx_load_png(PLAYER));
+	ft_putstr_fd("load player\n", 1);
+	mp->tex->img_collectable = mlx_texture_to_image(mlx, mlx_load_png(COLL));
+	if (!mp->tex->img_wall || !mp->tex->img_empty || !mp->tex->img_exit || !mp->tex->img_collectable || !mp->tex->img_player)
+		errmsg_and_exit("Image loading failed\n", mp);
 }
 
-//floodfill the map chars with the images here???
-void fill_map(t_map *mp)
+void	init_instances(t_map *mp)
 {
-    int i;
-    int j;
-    int x;
-    int y;
+	int	i;
+	int	j;
+	int	x;
+	int	y;
 
-    x = j * IMGSIZE;
-    y = i * IMGSIZE;
-    i = 0;
-    while (i < mp->dimension[0])
-    {
-        j = 0;
-        while (j = 0; j < mp->dimension[1]; j++)
-        {
-            if (mp->2d_arr[i][j] == '0') // empty space
-                mlx_put_image_to_window(mlx_ptr, win_ptr, img_space, x, y);
-            else if (mp->2d_arr[i][j] == '1')
-                 mlx_put_image_to_window(mlx_ptr, win_ptr, img_wall, x, y);
-            else if (mp->2d_arr[i][j] == 'C')
-                mlx_put_image_to_window(mlx_ptr, win_ptr, img_coll, x, y);
-            else if (mp->2d_arr[i][j] == 'E')
-                mlx_put_image_to_window(mlx_ptr, win_ptr, img_exit, x, y);
-            else if (mp->2d_arr[i][j] == 'P')
-                 mlx_put_image_to_window(mlx_ptr, win_ptr, img_player, x, y);
-            j++;
-        }
-        i++;
-    }
+	i = 0;
+	while (i < mp->dimension[0])
+	{
+		j = 0;
+		while (j < mp->dimension[1])
+		{
+			x = j * IMGSIZE;
+			y = i * IMGSIZE;
+			if (mp->arr_2d[i][j] == '0')
+				mlx_image_to_window(mp->mlx, mp->tex->img_empty, x, y);
+			else if (mp->arr_2d[i][j] == '1')
+				mlx_image_to_window(mp->mlx, mp->tex->img_wall, x, y);
+			else if (mp->arr_2d[i][j] == 'C')
+				mlx_image_to_window(mp->mlx, mp->tex->img_collectable, x, y);
+			else if (mp->arr_2d[i][j] == 'E')
+				mlx_image_to_window(mp->mlx, mp->tex->img_exit, x, y);
+			else if (mp->arr_2d[i][j] == 'P')
+			{
+				mlx_image_to_window(mp->mlx, mp->tex->img_empty, x, y);
+				mlx_image_to_window(mp->mlx, mp->tex->img_player, x, y);
+				mp->player_inst = mp->tex->img_player;
+				mp->player_location[0] = i;
+				mp->player_location[1] = j;
+			}
+			j++;
+		}
+		i++;
+	}
 }
