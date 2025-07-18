@@ -92,6 +92,7 @@ int		check_accessibility(t_map *mp);	//15,  0 as ok
 //map mlx window, texture and instance initiation: init_mlx.c
 void	mlx_new_window(t_map *mp);
 void	texture_path(t_map *mp);
+void	init_background(t_map *mp);
 void	init_instances(t_map *mp);
 
 //player control and game processing: player_move.c

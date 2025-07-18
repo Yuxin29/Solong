@@ -27,10 +27,10 @@ void	map_collecting_move(t_map *mp, int x, int y)
 	i = 0;
 	if (mp->arr_2d[y][x] == 'C')
 	{
-		mp->counter[0]++;
+		mp->counter[0] += 1;
 		mp->arr_2d[y][x] = '0';
 		i = 0;
-		while (i < mp->counter[0])
+		while (i < mp->counter[1])
 		{
 			if (mp->tex->img_collectable->instances[i].x == x * IMGSIZE)
 			{
@@ -52,7 +52,6 @@ void	map_exit_move(t_map *mp, int x, int y)
 	{
 		ft_putstr_fd("Victory\n", 1);
 		mlx_close_window(mp->mlx);
-		free_t_map(mp);
 	}
 }
 
@@ -62,10 +61,10 @@ void	move(t_map *mp, int x_new, int y_new)
 		return ;
 	mp->player_location[0] = y_new;
 	mp->player_location[1] = x_new;
+	print_steps(mp);
 	map_normal_move(mp, x_new, y_new);
 	map_collecting_move(mp, x_new, y_new);
 	map_exit_move(mp, x_new, y_new);
-	print_steps(mp);
 }
 
 //this checks the move and if it is valid, and what kind of move it is,
@@ -77,7 +76,7 @@ void	keyboard_control(mlx_key_data_t	keydata, void *param)
 
 	mp = (t_map *)param;
 	x_new = mp->player_location[1];
-	y_new = mp->player_location[1];
+	y_new = mp->player_location[0];
 	if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		mlx_close_window(mp->mlx);
@@ -85,13 +84,13 @@ void	keyboard_control(mlx_key_data_t	keydata, void *param)
 		return ;
 	}
 	else if (keydata.key == MLX_KEY_UP)
-		y_new -= 1;
+		y_new = mp->player_location[0] - 1;
 	else if (keydata.key == MLX_KEY_DOWN)
-		y_new += 1;
+		y_new = mp->player_location[0] + 1;
 	else if (keydata.key == MLX_KEY_LEFT)
-		x_new -= 1;
+		x_new = mp->player_location[1] - 1;
 	else if (keydata.key == MLX_KEY_RIGHT)
-		x_new += 1;
+		x_new = mp->player_location[1] + 1;
 	else
 		return ;
 	move(mp, x_new, y_new);

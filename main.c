@@ -52,11 +52,11 @@ int	main(int ac, char **av)
 	check_map_all(mp);
 	mlx_new_window(mp);
 	texture_path(mp);
+	init_background(mp);
 	init_instances(mp);
 	mlx_key_hook(mp->mlx, keyboard_control, mp);
-	ft_putstr_fd("Entering mlx loop\n", 1);
 	mlx_loop(mp->mlx);
-	mlx_terminate(mp->mlx);
+	ft_putstr_fd("so far so good\n", 1);
 	free_t_map(mp);
 	return (0);
 }

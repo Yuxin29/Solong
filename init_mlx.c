@@ -46,6 +46,28 @@ void	texture_path(t_map *mp)
 		errmsg_and_exit("Image_collectable loading failed\n", mp);
 }
 
+void	init_background(t_map *mp)
+{
+	int	i;
+	int	j;
+	int	x;
+	int	y;
+
+	i = 0;
+	while (i < mp->dimension[0])
+	{
+		y = i * IMGSIZE;
+		j = 0;
+		while (j < mp->dimension[1])
+		{
+			x = j * IMGSIZE;
+			mlx_image_to_window(mp->mlx, mp->tex->img_empty, x, y);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	init_instances(t_map *mp)
 {
 	int	i;
@@ -56,20 +78,15 @@ void	init_instances(t_map *mp)
 	i = 0;
 	while (i < mp->dimension[0])
 	{
+		y = i * IMGSIZE;
 		j = 0;
 		while (j < mp->dimension[1])
 		{
 			x = j * IMGSIZE;
-			y = i * IMGSIZE;
-			if (mp->arr_2d[i][j] == '0')
-				mlx_image_to_window(mp->mlx, mp->tex->img_empty, x, y);
-			else if (mp->arr_2d[i][j] == '1')
+			if (mp->arr_2d[i][j] == '1')
 				mlx_image_to_window(mp->mlx, mp->tex->img_wall, x, y);
 			else if (mp->arr_2d[i][j] == 'C')
-			{
-				mlx_image_to_window(mp->mlx, mp->tex->img_empty, x, y);
 				mlx_image_to_window(mp->mlx, mp->tex->img_collectable, x, y);
-			}
 			else if (mp->arr_2d[i][j] == 'E')
 				mlx_image_to_window(mp->mlx, mp->tex->img_exit, x, y);
 			else if (mp->arr_2d[i][j] == 'P')
