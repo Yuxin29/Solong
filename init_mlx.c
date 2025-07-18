@@ -68,35 +68,38 @@ void	init_background(t_map *mp)
 	}
 }
 
+static void	init_character(t_map *mp, int i, int j)
+{
+	int	x;
+	int	y;
+
+	y = i * IMGSIZE;
+	x = j * IMGSIZE;
+	if (mp->arr_2d[i][j] == '1')
+		mlx_image_to_window(mp->mlx, mp->tex->img_wall, x, y);
+	else if (mp->arr_2d[i][j] == 'C')
+		mlx_image_to_window(mp->mlx, mp->tex->img_collectable, x, y);
+	else if (mp->arr_2d[i][j] == 'E')
+		mlx_image_to_window(mp->mlx, mp->tex->img_exit, x, y);
+	else if (mp->arr_2d[i][j] == 'P')
+	{
+		mlx_image_to_window(mp->mlx, mp->tex->img_player, x, y);
+		mp->player_inst = mp->tex->img_player;
+	}
+}
+
 void	init_instances(t_map *mp)
 {
 	int	i;
 	int	j;
-	int	x;
-	int	y;
 
 	i = 0;
 	while (i < mp->dimension[0])
 	{
-		y = i * IMGSIZE;
 		j = 0;
 		while (j < mp->dimension[1])
 		{
-			x = j * IMGSIZE;
-			if (mp->arr_2d[i][j] == '1')
-				mlx_image_to_window(mp->mlx, mp->tex->img_wall, x, y);
-			else if (mp->arr_2d[i][j] == 'C')
-				mlx_image_to_window(mp->mlx, mp->tex->img_collectable, x, y);
-			else if (mp->arr_2d[i][j] == 'E')
-				mlx_image_to_window(mp->mlx, mp->tex->img_exit, x, y);
-			else if (mp->arr_2d[i][j] == 'P')
-			{
-				mlx_image_to_window(mp->mlx, mp->tex->img_empty, x, y);
-				mlx_image_to_window(mp->mlx, mp->tex->img_player, x, y);
-				mp->player_inst = mp->tex->img_player;
-				mp->player_location[0] = i;
-				mp->player_location[1] = j;
-			}
+			init_character(mp, i, j);
 			j++;
 		}
 		i++;

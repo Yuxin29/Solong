@@ -99,7 +99,7 @@ void	init_instances(t_map *mp);
 void	map_updating(t_map *mp);
 void	map_collectable_refill(t_map *mp, int x, int y);
 void	finish_game_by_player(t_map *mp, int x, int y);
-void	move(t_map	*mp, int x_new, int	y_new);
+void	move(t_map *mp, int x_new, int y_new);
 void	keyboard_control(mlx_key_data_t keydata, void *param);
 
 //error management and exit cleannig up: error.c

@@ -12,16 +12,16 @@
 
 #include "so_long.h"
 
-static void	copy_all_ints(t_map mp_cp, t_map mp)
+static void	copy_all_ints(t_map *mp_cp, t_map *mp)
 {
-	mp_cp.dimension[0] = mp.dimension[0];
-	mp_cp.dimension[1] = mp.dimension[1];
-	mp_cp.player_location[0] = mp.player_location[0];
-	mp_cp.player_location[1] = mp.player_location[1];
-	mp_cp.exit_location[0] = mp.exit_location[0];
-	mp_cp.exit_location[1] = mp.exit_location[1];
-	mp_cp.counter[0] = mp.counter[0];
-	mp_cp.counter[1] = mp.counter[1];
+	mp_cp->dimension[0] = mp->dimension[0];
+	mp_cp->dimension[1] = mp->dimension[1];
+	mp_cp->player_location[0] = mp->player_location[0];
+	mp_cp->player_location[1] = mp->player_location[1];
+	mp_cp->exit_location[0] = mp->exit_location[0];
+	mp_cp->exit_location[1] = mp->exit_location[1];
+	mp_cp->counter[0] = mp->counter[0];
+	mp_cp->counter[1] = mp->counter[1];
 }
 
 t_map	*map_copy(t_map *mp)
@@ -34,8 +34,9 @@ t_map	*map_copy(t_map *mp)
 	mp_cp = malloc(sizeof(t_map) * 1);
 	if (!mp_cp)
 		errmsg_and_exit("malloc for copy failed", mp);
-	copy_all_ints(*mp_cp, *mp);
-	mp_cp->arr_2d = malloc(sizeof(char *) * (mp->dimension[0]) + 1);
+	ft_bzero(mp_cp, sizeof(t_map));
+	copy_all_ints(mp_cp, mp);
+	mp_cp->arr_2d = malloc(sizeof(char *) * (mp->dimension[0] + 1));
 	if (!mp_cp->arr_2d)
 		errmsg_and_exit("malloc for arr 2d copy failed", mp);
 	while (i < mp->dimension[0])

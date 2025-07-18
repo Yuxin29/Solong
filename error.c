@@ -29,27 +29,8 @@ void	errmsg_and_exit(char *msg, t_map *mp)
 	exit (1);
 }
 
-/*
-//clean up and free things
-//should I set this str arr_1d to NULL as well???
-void	free_t_map(t_map	*mp)
+static void	free_texture(t_map *mp)
 {
-	free(mp->arr_1d);
-	ft_free_split(mp->arr_2d);
-	free (mp->tex);
-	free (mp->mlx);
-	free (mp->player_inst);
-	free (mp);
-	mp = NULL;
-}*/
-
-void	free_t_map(t_map *mp)
-{
-	int	i;
-
-	ft_putstr_fd("free starts\n", 1);
-	if (!mp)
-		return ;
 	if (mp->tex)
 	{
 		if (mp->tex->img_empty)
@@ -64,7 +45,17 @@ void	free_t_map(t_map *mp)
 			mlx_delete_image(mp->mlx, mp->tex->img_player);
 		free(mp->tex);
 	}
-	//ft_putstr_fd("tex freed\n", 1);
+}
+
+//clean up and free things
+void	free_t_map(t_map *mp)
+{
+	int	i;
+
+	ft_putstr_fd("free starts\n", 1);
+	if (!mp)
+		return ;
+	free_texture(mp);
 	if (mp->arr_2d)
 	{
 		i = 0;
@@ -72,14 +63,10 @@ void	free_t_map(t_map *mp)
 			free(mp->arr_2d[i++]);
 		free(mp->arr_2d);
 	}
-	//ft_putstr_fd("arr 2d freed\n", 1);
 	if (mp->arr_1d)
 		free(mp->arr_1d);
-	//ft_putstr_fd("arr 1d freed\n", 1);
 	if (mp->mlx)
 		free(mp->mlx);
-	//ft_putstr_fd("mlx freed\n", 1);
 	free(mp);
-	//ft_putstr_fd("mp freed\n", 1);
 	mp = NULL;
 }
