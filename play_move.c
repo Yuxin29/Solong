@@ -80,7 +80,6 @@ void	keyboard_control(mlx_key_data_t	keydata, void *param)
 	if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		mlx_close_window(mp->mlx);
-		free_t_map(mp);
 		return ;
 	}
 	else if (keydata.key == MLX_KEY_UP)

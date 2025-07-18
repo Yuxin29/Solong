@@ -52,9 +52,9 @@ void	free_t_map(t_map *mp)
 {
 	int	i;
 
-	ft_putstr_fd("free starts\n", 1);
 	if (!mp)
 		return ;
+	ft_putstr_fd("free starts\n", 1);
 	free_texture(mp);
 	if (mp->arr_2d)
 	{

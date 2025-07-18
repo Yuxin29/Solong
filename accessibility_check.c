@@ -69,19 +69,25 @@ void	flood_fill(t_map *mp, int x, int y)
 int	check_accessibility(t_map *mp)
 {
 	t_map	*mp_cp;
-	int		i;
+	int		y;
+	int		x;
 
 	mp_cp = map_copy(mp);
 	flood_fill(mp_cp, mp->player_location[1], mp->player_location[0]);
-	i = 0;
-	while (mp_cp->arr_2d[i])
+	y = 0;
+	while (y < mp_cp->dimension[0])
 	{
-		if (mp_cp->arr_1d[i] == 'C' || mp_cp->arr_1d[i] == 'E')
+		x = 0;
+		while (mp_cp->arr_2d[y][x])
 		{
-			free_t_map(mp_cp);
-			return (1);
+			if (mp_cp->arr_2d[y][x] == 'C' || mp_cp->arr_2d[y][x] == 'E')
+			{
+				free_t_map(mp_cp);
+				return (1);
+			}
+			x++;
 		}
-		i++;
+		y++;
 	}
 	free_t_map(mp_cp);
 	return (0);
