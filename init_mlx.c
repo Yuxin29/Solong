@@ -29,15 +29,21 @@ void	texture_path(t_map *mp)
 	mlx_t	*mlx;
 
 	mlx = mp->mlx;
-	mp->tex->img_wall = mlx_texture_to_image(mlx, mlx_load_png(WALL));
 	mp->tex->img_empty = mlx_texture_to_image(mlx, mlx_load_png(SPACE));
+	if (!mp->tex->img_empty)
+		errmsg_and_exit("Image_empty loading failed\n", mp);
+	mp->tex->img_wall = mlx_texture_to_image(mlx, mlx_load_png(WALL));
+	if (!mp->tex->img_wall)
+		errmsg_and_exit("Image_wall loading failed\n", mp);
 	mp->tex->img_exit = mlx_texture_to_image(mlx, mlx_load_png(EXIT));
-	ft_putstr_fd("load exit\n", 1);
+	if (!mp->tex->img_exit)
+		errmsg_and_exit("Image_exit loading failed\n", mp);
 	mp->tex->img_player = mlx_texture_to_image(mlx, mlx_load_png(PLAYER));
-	ft_putstr_fd("load player\n", 1);
+	if (!mp->tex->img_player)
+		errmsg_and_exit("Image_player loading failed\n", mp);
 	mp->tex->img_collectable = mlx_texture_to_image(mlx, mlx_load_png(COLL));
-	if (!mp->tex->img_wall || !mp->tex->img_empty || !mp->tex->img_exit || !mp->tex->img_collectable || !mp->tex->img_player)
-		errmsg_and_exit("Image loading failed\n", mp);
+	if (!mp->tex->img_collectable)
+		errmsg_and_exit("Image_collectable loading failed\n", mp);
 }
 
 void	init_instances(t_map *mp)
@@ -60,7 +66,10 @@ void	init_instances(t_map *mp)
 			else if (mp->arr_2d[i][j] == '1')
 				mlx_image_to_window(mp->mlx, mp->tex->img_wall, x, y);
 			else if (mp->arr_2d[i][j] == 'C')
+			{
+				mlx_image_to_window(mp->mlx, mp->tex->img_empty, x, y);
 				mlx_image_to_window(mp->mlx, mp->tex->img_collectable, x, y);
+			}
 			else if (mp->arr_2d[i][j] == 'E')
 				mlx_image_to_window(mp->mlx, mp->tex->img_exit, x, y);
 			else if (mp->arr_2d[i][j] == 'P')

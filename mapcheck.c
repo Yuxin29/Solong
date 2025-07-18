@@ -77,16 +77,11 @@ int	check_closure(t_map *mp)
 	int	h;
 
 	w = 0;
-	while (mp->arr_2d[0][w])
+	h = mp->dimension[0] - 1;
+	while (mp->arr_2d[h][w])
 	{
 		if (mp->arr_2d[0][w] != '1')
 			return (1);
-		w++;
-	}
-	h = mp->dimension[0] - 1;
-	w = 0;
-	while (mp->arr_2d[h][w])
-	{
 		if (mp->arr_2d[h][w] != '1')
 			return (1);
 		w++;

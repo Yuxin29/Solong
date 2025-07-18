@@ -12,6 +12,14 @@
 
 #include "so_long.h"
 
+//this should be called every time when a solid move is made
+void	print_steps(t_map *mp)
+{
+	mp->steps++;
+	ft_putnbr_fd(mp->steps, 1);
+	ft_putchar_fd('\n', 1);
+}
+
 // this one send error msg and exit with 1 and free mp
 void	errmsg_and_exit(char *msg, t_map *mp)
 {

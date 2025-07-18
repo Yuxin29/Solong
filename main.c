@@ -21,18 +21,21 @@ int	check_file(char *file_name)
 	return (0);
 }
 
-/*
-int	main(void)
+//call all the functions above and return int as signal to error msg part
+	//other wrong cases like map too small 3 x 3 ?
+void	check_map_all(t_map *mp)
 {
-	mlx_t *mlx = mlx_init(300, 300, "Test Window", false);
-	if (!mlx)
-		return (1);
-
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	return (0);
+	if (check_elements(mp))
+		errmsg_and_exit("wrong element number\n", mp);
+	if (check_rectangular(mp))
+		errmsg_and_exit("not rectangular map\n", mp);
+	if (check_closure(mp))
+		errmsg_and_exit("not closed map\n", mp);
+	if (check_size(mp))
+		errmsg_and_exit("map too big\n", mp);
+	if (check_accessibility(mp))
+		errmsg_and_exit("not all collectable/exit accessable\n", mp);
 }
-*/
 
 int	main(int ac, char **av)
 {

@@ -17,11 +17,11 @@
 #include <stdio.h> //perror
 #include <string.h> //strerror
 
-//0 for an empty space,
-//1 for a wall,		
-//C for a collectible,
-//E for a map exit,
-//P for the player’s starting position.
+//0: empty space,
+//1: wall,		
+//C: collectible,
+//E: exit,
+//P: player’s starting position.
 */
 
 #ifndef SO_LONG
@@ -37,8 +37,8 @@
 
 //graphics macros
 # define IMGSIZE 64
-# define WIN_MAX_W 2560
-# define WIN_MAX_H 1440
+# define WIN_MAX_W 3840
+# define WIN_MAX_H 2160
 
 //image macros
 # define SPACE "textures/empty.png"
@@ -46,13 +46,6 @@
 # define COLL "textures/collectable.png"
 # define EXIT "textures/exit.png"
 # define PLAYER "textures/player.png"
-
-//keyboard macros
-# define KEY_UP		MLX_KEY_W
-# define KEY_DOWN	MLX_KEY_S
-# define KEY_LEFT	MLX_KEY_A
-# define KEY_RIGHT	MLX_KEY_D
-# define KEY_ESC	MLX_KEY_ESCAPE
 
 typedef struct s_texture
 {
@@ -77,45 +70,45 @@ typedef struct s_map
 	mlx_image_t	*player_inst;
 }				t_map;
 
-/* ----------------t_map handling------------parsing.c----------------------- */
-void	get_map_arrays(t_map *mp, char *file_name);
+//input parsing and t_map initiation: parsing.c
+void	get_2d_arrays(t_map *mp, char *file_name);
+void	get_1d_arrays(t_map *mp);
 void	get_location(t_map *mp);
 void	malloc_and_dimension(t_map mp, char *file_name);
 t_map	*init_map(char *file_name);
 
-/* ------------------input check------------mapcheck.c----------------------- */
+//map precheck: mapcheck.c
 int		check_one_elements(char c, t_map *mp);
 int		check_elements(t_map *mp);	//11  1 as error and  0 as ok
 int		check_rectangular(t_map *mp); //12,  0 as ok
 int		check_closure(t_map *mp); //13,  0 as ok	
 int		check_size(t_map *mp);	//14,  0 as ok
 
-/* -------------more input check------------accessibility_check.c------------ */
+//map postcheck: accessibility_check.c
 t_map	*map_copy(t_map *mp);
 void	flood_fill(t_map *mp, int x, int y);
 int		check_accessibility(t_map *mp);	//15,  0 as ok
-void	check_map_all(t_map *mp);
 
-/* ------------------initialise mlx windows-------init_mlx.c----------------- */
+//map mlx window, texture and instance initiation: init_mlx.c
 void	mlx_new_window(t_map *mp);
 void	texture_path(t_map *mp);
 void	init_instances(t_map *mp);
 
-/* ------player control and game processing-------player_move.c-------------- */
-void	keyboard_control(mlx_key_data_t keydata, void *param);
+//player control and game processing: player_move.c
 void	map_updating(t_map *mp);
 void	map_collectable_refill(t_map *mp, int x, int y);
 void	finish_game_by_player(t_map *mp, int x, int y);
-void	print_steps(t_map *mp);
+void	move(t_map	*mp, int x_new, int	y_new);
+void	keyboard_control(mlx_key_data_t keydata, void *param);
 
-/* --------error management and exit cleannig up-------error.c--------------- */
+//error management and exit cleannig up: error.c
+void	print_steps(t_map *mp);
 void	errmsg_and_exit(char *msg, t_map *mp);
 void	free_t_map(t_map	*map);
-//void	quit_by_player(void);
 
-/* --------error management and exit cleannig up-------main.c---------------- */
+//check file, check map and initiate window, loop through and terminate: main.c
 int		check_file(char *filename);
+void	check_map_all(t_map *mp);
 int		main(int ac, char **av);
-//int	main(void);
 
 #endif

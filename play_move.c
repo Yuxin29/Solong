@@ -12,14 +12,6 @@
 
 #include "so_long.h"
 
-//this should be called every time when a solid move is made
-void	print_steps(t_map *mp)
-{
-	mp->steps++;
-	ft_putnbr_fd(mp->steps, 1);
-	ft_putchar_fd('\n', 1);
-}
-
 //be called every time when the keyboard control turned out to be a valid one
 void	map_normal_move(t_map *mp, int x, int y)
 {
@@ -64,36 +56,8 @@ void	map_exit_move(t_map *mp, int x, int y)
 	}
 }
 
-//this checks the move and if it is valid, and what kind of move it is,
-void	keyboard_control(mlx_key_data_t	keydata, void *param)
+void	move(t_map *mp, int x_new, int y_new)
 {
-	t_map	*mp;
-	int		x;
-	int		y;
-	int		x_new;
-	int		y_new;
-
-	mp = (t_map *)param;
-	x = mp->player_location[1];
-	y = mp->player_location[0];
-	x_new = x;
-	y_new = y;
-	if (keydata.key == MLX_KEY_ESCAPE)
-	{
-		mlx_close_window(mp->mlx);
-		free_t_map(mp);
-		return ;
-	}
-	else if (keydata.key == MLX_KEY_UP)
-		y_new = y - 1;
-	else if (keydata.key == MLX_KEY_DOWN)
-		y_new = y + 1;
-	else if (keydata.key == MLX_KEY_LEFT)
-		x_new = x - 1;
-	else if (keydata.key == MLX_KEY_RIGHT)
-		x_new = x + 1;
-	else
-		return ;
 	if (mp->arr_2d[y_new][x_new] == '1')
 		return ;
 	mp->player_location[0] = y_new;
@@ -102,6 +66,35 @@ void	keyboard_control(mlx_key_data_t	keydata, void *param)
 	map_collecting_move(mp, x_new, y_new);
 	map_exit_move(mp, x_new, y_new);
 	print_steps(mp);
+}
+
+//this checks the move and if it is valid, and what kind of move it is,
+void	keyboard_control(mlx_key_data_t	keydata, void *param)
+{
+	t_map	*mp;
+	int		x_new;
+	int		y_new;
+
+	mp = (t_map *)param;
+	x_new = mp->player_location[1];
+	y_new = mp->player_location[1];
+	if (keydata.key == MLX_KEY_ESCAPE)
+	{
+		mlx_close_window(mp->mlx);
+		free_t_map(mp);
+		return ;
+	}
+	else if (keydata.key == MLX_KEY_UP)
+		y_new -= 1;
+	else if (keydata.key == MLX_KEY_DOWN)
+		y_new += 1;
+	else if (keydata.key == MLX_KEY_LEFT)
+		x_new -= 1;
+	else if (keydata.key == MLX_KEY_RIGHT)
+		x_new += 1;
+	else
+		return ;
+	move(mp, x_new, y_new);
 }
 
 // a structruct by mlx42
