@@ -21,8 +21,8 @@ int	check_file(char *file_name)
 	return (0);
 }
 
-//call all the functions above and return int as signal to error msg part
-	//other wrong cases like map too small 3 x 3 ?
+//call all the checkes functions above
+//other wrong cases like map too small 3 x 3 ?
 void	check_map_all(t_map *mp)
 {
 	if (check_elements(mp))
