@@ -68,6 +68,7 @@ int	main(int ac, char **av)
 	init_background(mp);
 	init_instances(mp);
 	mlx_key_hook(mp->mlx, keyboard_control, mp);
+	mlx_close_hook(mp->mlx, handle_cross_click, mp);
 	mlx_loop(mp->mlx);
 	free_t_map(mp);
 	return (0);

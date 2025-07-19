@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuwu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -23,13 +23,21 @@ void	print_steps(t_map *mp)
 // this one send error msg and exit with 1 and free mp
 void	errmsg_and_exit(char *msg, t_map *mp)
 {
+	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(msg, 2);
 	if (mp)
 		free_t_map(mp);
 	exit (1);
 }
 
-static void	free_texture(t_map *mp)
+void	handle_cross_click(void *param)
+{
+	t_map *mp = (t_map *)param;
+	free_t_map(mp);
+	exit(0);
+}
+
+void	free_texture(t_map *mp)
 {
 	if (!mp || !mp->tex)
 		return ;

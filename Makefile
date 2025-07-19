@@ -24,7 +24,7 @@ NAME := so_long
 CFLAGS := -Wall -Wextra -Werror -g $(MLX_INCLUDE)
 CC := cc
 
-SRCS := parsing.c mapcheck.c accessibility_check.c init_mlx.c play_move.c error.c main.c $(GNL_SRC)
+SRCS := init_map.c mapcheck.c accessibility_check.c init_mlx.c play_move.c utils.c main.c $(GNL_SRC)
 OBJS := $(SRCS:%.c=%.o)
 
 $(NAME): $(OBJS) $(LIBFT)

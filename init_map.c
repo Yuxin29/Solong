@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuwu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -85,7 +85,7 @@ void	get_location(t_map *mp)
 		}
 		i++;
 	}
-	mp->counter[1] = check_one_elements('C', mp);
+	mp->counter[1] = get_element_number('C', mp);
 }
 
 void	malloc_and_dimention(t_map *mp, char *file_name)

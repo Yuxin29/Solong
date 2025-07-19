@@ -13,7 +13,7 @@
 #include "so_long.h"
 
 //helper to check how many times one element appears in this map
-int	check_one_elements(char c, t_map *mp)
+int	get_element_number(char c, t_map *mp)
 {
 	int	i;
 	int	counter;
@@ -40,10 +40,10 @@ int	check_elements(t_map *mp)
 	int	counter_e;
 	int	counter_empty;
 
-	counter_p = check_one_elements('P', mp);
-	counter_c = check_one_elements('C', mp);
-	counter_e = check_one_elements('E', mp);
-	counter_empty = check_one_elements(' ', mp);
+	counter_p = get_element_number('P', mp);
+	counter_c = get_element_number('C', mp);
+	counter_e = get_element_number('E', mp);
+	counter_empty = get_element_number(' ', mp);
 	if (counter_p != 1 || counter_c < 1 || counter_e != 1)
 		return (1);
 	if (counter_empty)

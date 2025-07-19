@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-static void	copy_all_ints(t_map *mp_cp, t_map *mp)
+void	copy_all_ints(t_map *mp_cp, t_map *mp)
 {
 	mp_cp->dimension[0] = mp->dimension[0];
 	mp_cp->dimension[1] = mp->dimension[1];

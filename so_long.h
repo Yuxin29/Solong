@@ -22,8 +22,50 @@
 //C: collectible,
 //E: exit,
 //P: player’s starting position.
-*/
 
+** ************************************************************************** **
+init_map.c    --->  +--------------------------+--->	init_map.c   
+    |               | malloc & dimension       |			|
+    |           	| get 1D/2D arrays         |---> err msg, free  & exit 1
+	|               | locate player            |			|
+    |               +--------------------------+			|
+	|														|
+mapcheck.c    --->  +--------------------------+			|
+    |               | check elements           |			|
+    |               | check rectangle          |			|
+    |               | check closure            |---> err msg, free  & exit 1
+    |               | check size               |			|
+    |               +--------------------------+			|
+	|														|	
+accessibility_--->	+--------------------------+			|
+ check.c            | copy map and flood fill  |---> err msg, free  & exit 1
+    |               | check accessibility      |			|
+    |               +--------------------------+			|
+	|														|
+init_mlx.c   --->   +--------------------------+			|
+    |               | create window            |			|
+    |               | load textures            |			|
+    |               | draw background          |---> err msg, free  & exit 1
+    |               | draw characters          |			|
+    |               +--------------------------+			|
+	|														|
+player_move.c --->  +--------------------------+			|
+    |               | keyboard input           |			|
+    |               | move player              |			|
+    |               | update map & print steps |---> err msg, free  & exit 1  
+    |               | check win condition      |			|
+    |               +--------------------------+			|
+	|														|
+main.c        --->  +--------------------------+			|
+                    | check arguments          |			|
+                    | init & verify map        |			|
+                	| set mlx hooks            |--> if success, free & exit 0
+                    | start mlx_loop           |
+					| win: free and close win  |
+                    +--------------------------+
+** ************************************************************************** **
+*/
+																							  
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -70,7 +112,7 @@ typedef struct s_map
 	mlx_image_t	*player_inst;
 }				t_map;
 
-//input parsing and t_map initiation: parsing.c
+//input parsing and t_map initiation: init_map.c
 void	get_2d_arrays(t_map *mp, char *file_name);
 void	get_1d_arrays(t_map *mp);
 void	get_location(t_map *mp);
@@ -78,13 +120,14 @@ void	malloc_and_dimension(t_map mp, char *file_name);
 t_map	*init_map(char *file_name);
 
 //map precheck: mapcheck.c
-int		check_one_elements(char c, t_map *mp);
+int		get_element_number(char c, t_map *mp);
 int		check_elements(t_map *mp);	//11  1 as error and  0 as ok
 int		check_rectangular(t_map *mp); //12,  0 as ok
 int		check_closure(t_map *mp); //13,  0 as ok	
 int		check_size(t_map *mp);	//14,  0 as ok
 
 //map postcheck: accessibility_check.c
+void	copy_all_ints(t_map *mp_cp, t_map *mp);
 t_map	*map_copy(t_map *mp);
 void	flood_fill(t_map *mp, int x, int y);
 int		check_accessibility(t_map *mp);	//15,  0 as ok
@@ -102,9 +145,11 @@ void	finish_game_by_player(t_map *mp, int x, int y);
 void	move(t_map *mp, int x_new, int y_new);
 void	keyboard_control(mlx_key_data_t keydata, void *param);
 
-//error management and exit cleannig up: error.c
+//error management and exit cleannig up: utils.c
 void	print_steps(t_map *mp);
 void	errmsg_and_exit(char *msg, t_map *mp);
+void	handle_cross_click(void *param);
+void	free_texture(t_map *mp);
 void	free_t_map(t_map	*map);
 
 //check file and ext, check map 
