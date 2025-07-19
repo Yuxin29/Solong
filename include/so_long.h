@@ -73,8 +73,8 @@ main.c        --->  +--------------------------+			|
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "./libft/libft.h"
-# include "./libft/get_next_line/get_next_line.h"
+# include "libft.h"
+# include "get_next_line.h"
 # include "MLX42/MLX42.h"
 
 //graphics macros
