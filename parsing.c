@@ -142,10 +142,10 @@ t_map	*init_map(char *file_name)
 	mp->arr_1d = NULL;
 	mp->arr_2d = NULL;
 	mp->mlx = NULL;
-	malloc_and_dimention(mp, file_name);
-	mp->tex = malloc(sizeof(t_texture));
+	mp->tex = calloc(1, sizeof(t_texture));
 	if (!mp->tex)
-		errmsg_and_exit("malloc for map texture failed\n", mp);
+		errmsg_and_exit("malloc tex failed\n", mp);
+	malloc_and_dimention(mp, file_name);
 	get_2d_arrays(mp, file_name);
 	get_1d_arrays(mp);
 	get_location(mp);

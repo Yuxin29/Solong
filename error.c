@@ -31,20 +31,20 @@ void	errmsg_and_exit(char *msg, t_map *mp)
 
 static void	free_texture(t_map *mp)
 {
-	if (mp->tex)
-	{
-		if (mp->tex->img_empty)
-			mlx_delete_image(mp->mlx, mp->tex->img_empty);
-		if (mp->tex->img_wall)
-			mlx_delete_image(mp->mlx, mp->tex->img_wall);
-		if (mp->tex->img_collectable)
-			mlx_delete_image(mp->mlx, mp->tex->img_collectable);
-		if (mp->tex->img_exit)
-			mlx_delete_image(mp->mlx, mp->tex->img_exit);
-		if (mp->tex->img_player)
-			mlx_delete_image(mp->mlx, mp->tex->img_player);
-		free(mp->tex);
-	}
+	if (!mp || !mp->tex)
+		return ;
+	if (mp->tex->img_empty && mp->mlx)
+		mlx_delete_image(mp->mlx, mp->tex->img_empty);
+	if (mp->tex->img_wall && mp->mlx)
+		mlx_delete_image(mp->mlx, mp->tex->img_wall);
+	if (mp->tex->img_collectable && mp->mlx)
+		mlx_delete_image(mp->mlx, mp->tex->img_collectable);
+	if (mp->tex->img_exit && mp->mlx)
+		mlx_delete_image(mp->mlx, mp->tex->img_exit);
+	if (mp->tex->img_player && mp->mlx)
+		mlx_delete_image(mp->mlx, mp->tex->img_player);
+	free(mp->tex);
+	mp->tex = NULL;
 }
 
 //clean up and free things
@@ -54,13 +54,15 @@ void	free_t_map(t_map *mp)
 
 	if (!mp)
 		return ;
-	ft_putstr_fd("free starts\n", 1);
 	free_texture(mp);
 	if (mp->arr_2d)
 	{
 		i = 0;
 		while (mp->arr_2d[i])
-			free(mp->arr_2d[i++]);
+		{
+			free(mp->arr_2d[i]);
+			i++;
+		}
 		free(mp->arr_2d);
 	}
 	if (mp->arr_1d)

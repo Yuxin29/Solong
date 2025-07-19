@@ -81,10 +81,7 @@ int	check_accessibility(t_map *mp)
 		while (mp_cp->arr_2d[y][x])
 		{
 			if (mp_cp->arr_2d[y][x] == 'C' || mp_cp->arr_2d[y][x] == 'E')
-			{
-				free_t_map(mp_cp);
 				return (1);
-			}
 			x++;
 		}
 		y++;

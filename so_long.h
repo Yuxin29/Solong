@@ -24,8 +24,10 @@
 //P: player’s starting position.
 */
 
-#ifndef SO_LONG
-# define SO_LONG
+//questions: wrong extention, does the map has to be .ber ??
+
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
 //header and libs
 # include <unistd.h>

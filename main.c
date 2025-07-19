@@ -22,7 +22,6 @@ int	check_file(char *file_name)
 }
 
 //call all the checkes functions above
-//other wrong cases like map too small 3 x 3 ?
 void	check_map_all(t_map *mp)
 {
 	if (check_elements(mp))
@@ -56,7 +55,6 @@ int	main(int ac, char **av)
 	init_instances(mp);
 	mlx_key_hook(mp->mlx, keyboard_control, mp);
 	mlx_loop(mp->mlx);
-	ft_putstr_fd("so far so good\n", 1);
 	free_t_map(mp);
 	return (0);
 }
