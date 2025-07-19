@@ -18,8 +18,6 @@ static void	copy_all_ints(t_map *mp_cp, t_map *mp)
 	mp_cp->dimension[1] = mp->dimension[1];
 	mp_cp->player_location[0] = mp->player_location[0];
 	mp_cp->player_location[1] = mp->player_location[1];
-	mp_cp->exit_location[0] = mp->exit_location[0];
-	mp_cp->exit_location[1] = mp->exit_location[1];
 	mp_cp->counter[0] = mp->counter[0];
 	mp_cp->counter[1] = mp->counter[1];
 }

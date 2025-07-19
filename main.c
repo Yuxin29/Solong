@@ -12,6 +12,7 @@
 
 #include "so_long.h"
 
+//check the file existence and excutability
 int	check_file(char *file_name)
 {
 	if (access(file_name, F_OK) != 0)
@@ -21,7 +22,18 @@ int	check_file(char *file_name)
 	return (0);
 }
 
-//call all the checkes functions above
+//check the extension of the file or filename
+int	check_extension(char *file_name)
+{
+	const char	*ext;
+
+	ext = ft_strrchr(file_name, '.');
+	if (!ext || ft_strncmp(ext, ".ber", 5) != 0)
+		return (1);
+	return (0);
+}
+
+//call all the map checkers functions above
 void	check_map_all(t_map *mp)
 {
 	if (check_elements(mp))
@@ -45,6 +57,8 @@ int	main(int ac, char **av)
 		errmsg_and_exit("wrong argument number\n", mp);
 	if (check_file(av[1]))
 		errmsg_and_exit("not existing/readable1\n", mp);
+	if (check_extension(av[1]))
+		errmsg_and_exit("wrong extension of the map file\n", mp);
 	mp = init_map(av[1]);
 	if (!mp)
 		errmsg_and_exit("initiate map failed\n", mp);

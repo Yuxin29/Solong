@@ -24,8 +24,6 @@
 //P: player’s starting position.
 */
 
-//questions: wrong extention, does the map has to be .ber ??
-
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -62,7 +60,7 @@ typedef struct s_map
 {
 	int			dimension[2];
 	int			player_location[2];
-	int			exit_location[2];
+	//int			exit_location[2];
 	int			counter[2];
 	int			steps;
 	char		*arr_1d;
@@ -109,8 +107,10 @@ void	print_steps(t_map *mp);
 void	errmsg_and_exit(char *msg, t_map *mp);
 void	free_t_map(t_map	*map);
 
-//check file, check map and initiate window, loop through and terminate: main.c
+//check file and ext, check map 
+// and initiate window, loop through and terminate: main.c
 int		check_file(char *filename);
+int		check_extension(char *filename);
 void	check_map_all(t_map *mp);
 int		main(int ac, char **av);
 

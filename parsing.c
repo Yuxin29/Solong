@@ -81,11 +81,6 @@ void	get_location(t_map *mp)
 				mp->player_location[0] = i;
 				mp->player_location[1] = j;
 			}
-			if (mp->arr_2d[i][j] == 'E')
-			{
-				mp->exit_location[0] = i;
-				mp->exit_location[1] = j;
-			}
 			j++;
 		}
 		i++;
@@ -134,8 +129,6 @@ t_map	*init_map(char *file_name)
 	mp->dimension[1] = 0;
 	mp->player_location[0] = 0;
 	mp->player_location[1] = 0;
-	mp->exit_location[0] = 0;
-	mp->exit_location[1] = 0;
 	mp->counter[0] = 0;
 	mp->counter[1] = 0;
 	mp->steps = 0;
