@@ -17,8 +17,9 @@ GNL_DIR = libft/get_next_line
 GNL_SRC = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
 
 MLX_DIR := MLX42
+MLX_LIB_FILE := $(MLX_DIR)/build/libmlx42.a
 MLX_INCLUDE := -I$(MLX_DIR)/include
-MLX_LIB := -L$(MLX_DIR)/build -lmlx42 -ldl -lglfw -pthread -lm
+MLX_LIBS := -L$(MLX_DIR)/build -lmlx42 -ldl -lglfw -pthread -lm
 
 NAME := so_long
 CFLAGS := -Wall -Wextra -Werror $(MLX_INCLUDE) -Iinclude -Ilibft -Ilibft/get_next_line
@@ -35,14 +36,18 @@ SRCS := $(SRC_DIR)/init_map.c \
         $(GNL_SRC)
 OBJS := $(SRCS:.c=.o)
 
-$(MLX42_DIR):
-	git clone https://github.com/codam-coding-college/MLX42.git $@;
-
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(MLX_INCLUDE) $(OBJS) $(LIBFT) $(MLX_LIB) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT) $(MLX_LIB_FILE)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_LIBS) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_PATH)
+
+$(MLX_DIR):
+	git clone https://github.com/codam-coding-college/MLX42.git $(MLX_DIR)
+
+$(MLX_LIB_FILE): | $(MLX_DIR)
+	cmake -B $(MLX_DIR)/build -S $(MLX_DIR)
+	make -C $(MLX_DIR)/build -j4
 
 all: $(NAME)
 
