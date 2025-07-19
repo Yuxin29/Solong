@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include "MLX42/MLX42.h"
 
 //be called every time when the keyboard control turned out to be a valid one
 void	map_normal_move(t_map *mp, int x, int y)
@@ -75,7 +76,7 @@ void	keyboard_control(mlx_key_data_t	keydata, void *param)
 	int		y_new;
 
 	if (keydata.action != MLX_PRESS)
-		return;
+		return ;
 	mp = (t_map *)param;
 	x_new = mp->player_location[1];
 	y_new = mp->player_location[0];
@@ -96,14 +97,3 @@ void	keyboard_control(mlx_key_data_t	keydata, void *param)
 		return ;
 	move(mp, x_new, y_new);
 }
-
-// a structruct by mlx42
-/*
-typedef struct s_mlx_key_data {
-    keys_t  key;      // The key that was pressed (e.g. MLX_KEY_W, MLX_KEY_UP)
-    action_t action;  // The action (press, release, repeat)
-    mods_t  modifiers; // Modifier keys (Shift, Ctrl, etc.)
-} mlx_key_data_t;
-
-void *param
-*/

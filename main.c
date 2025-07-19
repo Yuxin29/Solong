@@ -12,17 +12,6 @@
 
 #include "so_long.h"
 
-//check the file existence and excutability
-/*
-int	check_file(char *file_name)
-{
-	if (access(file_name, F_OK) != 0)
-		return (1);
-	if (access(file_name, R_OK) != 0)
-		return (0);
-	return (0);
-} */
-
 //check the extension of the file or filename
 int	check_extension(char *file_name)
 {
@@ -59,8 +48,6 @@ int	main(int ac, char **av)
 	if (check_extension(av[1]))
 		errmsg_and_exit("wrong extension of the map file\n", mp);
 	mp = init_map(av[1]);
-	if (!mp)
-		errmsg_and_exit("initiate map failed\n", mp);
 	check_map_all(mp);
 	mlx_new_window(mp);
 	texture_path(mp);

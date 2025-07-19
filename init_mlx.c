@@ -26,23 +26,30 @@ void	mlx_new_window(t_map *mp)
 
 void	texture_path(t_map *mp)
 {
-	mlx_t	*mlx;
+	mlx_texture_t	*png;
 
-	mlx = mp->mlx;
-	mp->tex->img_empty = mlx_texture_to_image(mlx, mlx_load_png(SPACE));
-	if (!mp->tex->img_empty)
-		errmsg_and_exit("Image_empty loading failed\n", mp);
-	mp->tex->img_wall = mlx_texture_to_image(mlx, mlx_load_png(WALL));
-	if (!mp->tex->img_wall)
-		errmsg_and_exit("Image_wall loading failed\n", mp);
-	mp->tex->img_exit = mlx_texture_to_image(mlx, mlx_load_png(EXIT));
-	if (!mp->tex->img_exit)
-		errmsg_and_exit("Image_exit loading failed\n", mp);
-	mp->tex->img_player = mlx_texture_to_image(mlx, mlx_load_png(PLAYER));
-	if (!mp->tex->img_player)
-		errmsg_and_exit("Image_player loading failed\n", mp);
-	mp->tex->img_collectable = mlx_texture_to_image(mlx, mlx_load_png(COLL));
-	if (!mp->tex->img_collectable)
+	png = mlx_load_png(SPACE);
+	if (png)
+		mp->tex->img_empty = mlx_texture_to_image(mp->mlx, png);
+	mlx_delete_texture(png);
+	png = mlx_load_png(WALL);
+	if (png)
+		mp->tex->img_wall = mlx_texture_to_image(mp->mlx, png);
+	mlx_delete_texture(png);
+	png = mlx_load_png(EXIT);
+	if (png)
+		mp->tex->img_exit = mlx_texture_to_image(mp->mlx, png);
+	mlx_delete_texture(png);
+	png = mlx_load_png(PLAYER);
+	if (png)
+		mp->tex->img_player = mlx_texture_to_image(mp->mlx, png);
+	mlx_delete_texture(png);
+	png = mlx_load_png(COLL);
+	if (png)
+		mp->tex->img_collectable = mlx_texture_to_image(mp->mlx, png);
+	mlx_delete_texture(png);
+	if (!mp->tex->img_empty || !mp->tex->img_wall || !mp->tex->img_exit
+		|| !mp->tex->img_player || !mp->tex->img_collectable)
 		errmsg_and_exit("Image_collectable loading failed\n", mp);
 }
 
