@@ -75,8 +75,12 @@ void	free_t_map(t_map *mp)
 	}
 	if (mp->arr_1d)
 		free(mp->arr_1d);
+	/*
 	if (mp->mlx)
 		free(mp->mlx);
+	*/
+	if (mp->mlx != NULL)
+		mlx_terminate(mp->mlx);
 	free(mp);
 	mp = NULL;
 }

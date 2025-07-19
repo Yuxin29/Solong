@@ -36,7 +36,10 @@ t_map	*map_copy(t_map *mp)
 	copy_all_ints(mp_cp, mp);
 	mp_cp->arr_2d = malloc(sizeof(char *) * (mp->dimension[0] + 1));
 	if (!mp_cp->arr_2d)
+	{
+		free_t_map(mp_cp);
 		errmsg_and_exit("malloc for arr 2d copy failed", mp);
+	}
 	while (i < mp->dimension[0])
 	{
 		mp_cp->arr_2d[i] = ft_strdup(mp->arr_2d[i]);
@@ -46,7 +49,7 @@ t_map	*map_copy(t_map *mp)
 	len = ft_strlen(mp->arr_1d);
 	mp_cp->arr_1d = malloc(len + 1);
 	if (!mp_cp->arr_1d)
-		errmsg_and_exit("malloc for arr_1d failed", mp);
+		errmsg_and_exit("malloc for arr_1d failed", mp); // FIXME
 	ft_memcpy(mp_cp->arr_1d, mp->arr_1d, len + 1);
 	return (mp_cp);
 }

@@ -74,6 +74,8 @@ void	keyboard_control(mlx_key_data_t	keydata, void *param)
 	int		x_new;
 	int		y_new;
 
+	if (keydata.action != MLX_PRESS)
+		return;
 	mp = (t_map *)param;
 	x_new = mp->player_location[1];
 	y_new = mp->player_location[0];

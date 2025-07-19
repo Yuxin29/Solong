@@ -124,7 +124,7 @@ t_map	*init_map(char *file_name)
 
 	mp = malloc(sizeof(t_map) * 1);
 	if (!mp)
-		return (NULL);
+		return (NULL); // FIXME
 	mp->dimension[0] = 0;
 	mp->dimension[1] = 0;
 	mp->player_location[0] = 0;

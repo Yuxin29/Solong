@@ -24,28 +24,28 @@
 //P: player’s starting position.
 
 ** ************************************************************************** **
-init_map.c    --->  +--------------------------+--->	init_map.c   
+init_map.c    --->  +--------------------------+	--->  utils.c   
     |               | malloc & dimension       |			|
-    |           	| get 1D/2D arrays         |---> err msg, free  & exit 1
+    |           	| get 1D/2D arrays         |---> err msg, free & exit 1
 	|               | locate player            |			|
     |               +--------------------------+			|
 	|														|
 mapcheck.c    --->  +--------------------------+			|
     |               | check elements           |			|
     |               | check rectangle          |			|
-    |               | check closure            |---> err msg, free  & exit 1
+    |               | check closure            |---> err msg, free & exit 1
     |               | check size               |			|
     |               +--------------------------+			|
 	|														|	
 accessibility_--->	+--------------------------+			|
- check.c            | copy map and flood fill  |---> err msg, free  & exit 1
+ check.c            | copy map and flood fill  |---> err msg, free & exit 1
     |               | check accessibility      |			|
     |               +--------------------------+			|
 	|														|
 init_mlx.c   --->   +--------------------------+			|
     |               | create window            |			|
     |               | load textures            |			|
-    |               | draw background          |---> err msg, free  & exit 1
+    |               | draw background          |---> err msg, free & exit 1
     |               | draw characters          |			|
     |               +--------------------------+			|
 	|														|
