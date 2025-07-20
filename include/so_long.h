@@ -102,7 +102,6 @@ typedef struct s_map
 {
 	int			dimension[2];
 	int			player_location[2];
-	//int			exit_location[2];
 	int			counter[2];
 	int			steps;
 	char		*arr_1d;

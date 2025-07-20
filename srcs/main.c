@@ -26,16 +26,21 @@ int	check_extension(char *file_name)
 //call all the map checkers functions above
 void	check_map_all(t_map *mp)
 {
+	int	a;
+
 	if (check_elements(mp))
-		errmsg_and_exit("wrong element number\n", mp);
+		errmsg_and_exit("wrong element number / empty space\n", mp);
 	if (check_rectangular(mp))
 		errmsg_and_exit("not rectangular map\n", mp);
 	if (check_closure(mp))
 		errmsg_and_exit("not closed map\n", mp);
 	if (check_size(mp))
 		errmsg_and_exit("map too big\n", mp);
-	if (check_accessibility(mp))
+	a = check_accessibility(mp);
+	if (a == 1)
 		errmsg_and_exit("not all collectable/exit accessable\n", mp);
+	if (a == 2)
+		errmsg_and_exit("copy for check_accessibility failed\n", mp);
 }
 
 int	main(int ac, char **av)
