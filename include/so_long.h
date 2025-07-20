@@ -76,6 +76,7 @@ main.c        --->  +--------------------------+			|
 # include "libft.h"
 # include "get_next_line.h"
 # include "MLX42/MLX42.h"
+//# include <MLX42/include/MLX42/MLX42.h>
 
 //graphics macros
 # define IMGSIZE 64
