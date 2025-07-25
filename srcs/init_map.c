@@ -34,6 +34,8 @@ void	get_2d_arrays(t_map *mp, char *file_name)
 			len++;
 		line[len] = '\0';
 		mp->arr_2d[j] = ft_strdup(line);
+		if (!mp->arr_2d[j])
+			errmsg_and_exit("strdup failed\n", mp);
 		free(line);
 		j++;
 		line = get_next_line(fd);
@@ -135,9 +137,10 @@ t_map	*init_map(char *file_name)
 	mp->arr_1d = NULL;
 	mp->arr_2d = NULL;
 	mp->mlx = NULL;
-	mp->tex = calloc(1, sizeof(t_texture));
+	mp->tex = ft_calloc(1, sizeof(t_texture));
 	if (!mp->tex)
 		errmsg_and_exit("malloc tex failed\n", mp);
+	ft_bzero(mp->tex, sizeof(mp->tex));
 	malloc_and_dimention(mp, file_name);
 	get_2d_arrays(mp, file_name);
 	get_1d_arrays(mp);

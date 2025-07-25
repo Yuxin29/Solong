@@ -36,6 +36,7 @@ void	handle_cross_click(void *param)
 
 	mp = (t_map *)param;
 	free_t_map(mp);
+	ft_putstr_fd("You closed the window early\n", 1);
 	exit(0);
 }
 

@@ -12,17 +12,6 @@
 
 #include "so_long.h"
 
-void	copy_all_ints(t_map *mp_cp, t_map *mp)
-{
-	mp_cp->dimension[0] = mp->dimension[0];
-	mp_cp->dimension[1] = mp->dimension[1];
-	mp_cp->player_location[0] = mp->player_location[0];
-	mp_cp->player_location[1] = mp->player_location[1];
-	mp_cp->counter[0] = mp->counter[0];
-	mp_cp->counter[1] = mp->counter[1];
-	mp_cp->steps = mp->steps;
-}
-
 t_map	*map_copy(t_map *mp)
 {
 	t_map	*mp_cp;
@@ -34,17 +23,16 @@ t_map	*map_copy(t_map *mp)
 	if (!mp_cp)
 		return (NULL);
 	ft_bzero(mp_cp, sizeof(t_map));
-	copy_all_ints(mp_cp, mp);
 	len = ft_strlen(mp->arr_1d);
 	mp_cp->arr_2d = malloc(sizeof(char *) * (mp->dimension[0] + 1));
 	mp_cp->arr_1d = malloc(len + 1);
 	if (!mp_cp->arr_2d || !mp_cp->arr_1d)
-		free_t_map(mp_cp);
-	if (!mp_cp->arr_2d || !mp_cp->arr_1d)
-		return (NULL);
+		return (free_t_map(mp_cp), NULL);
 	while (i < mp->dimension[0])
 	{
 		mp_cp->arr_2d[i] = ft_strdup(mp->arr_2d[i]);
+		if (!mp_cp->arr_2d[i])
+			return (free_t_map(mp_cp), NULL);
 		i++;
 	}
 	mp_cp->arr_2d[i] = NULL;
@@ -55,6 +43,8 @@ t_map	*map_copy(t_map *mp)
 //recursive call to fill all the map with F as filled
 void	flood_fill(t_map *mp, int x, int y)
 {
+	if (x < 0 || y < 0 || y >= mp->dimension[0] || x >= mp->dimension[1])
+		return ;
 	if (mp->arr_2d[y][x] == '1' || mp->arr_2d[y][x] == 'F')
 		return ;
 	mp->arr_2d[y][x] = 'F';
@@ -91,5 +81,21 @@ int	check_accessibility(t_map *mp)
 		y++;
 	}
 	free_t_map(mp_cp);
+	return (0);
+}
+
+int	check_invalid_chars(t_map *mp)
+{
+	int	i;
+
+	i = 0;
+	while (mp->arr_1d[i])
+	{
+		if (mp->arr_1d[i] != '0' && mp->arr_1d[i] != '1'
+			&& mp->arr_1d[i] != 'C'
+			&& mp->arr_1d[i] != 'P' && mp->arr_1d[i] != 'E')
+			return (1);
+		i++;
+	}
 	return (0);
 }

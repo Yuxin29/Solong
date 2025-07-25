@@ -36,6 +36,8 @@ void	check_map_all(t_map *mp)
 		errmsg_and_exit("not closed map\n", mp);
 	if (check_size(mp))
 		errmsg_and_exit("map too big\n", mp);
+	if (check_invalid_chars(mp))
+		errmsg_and_exit("invalid chars from the map\n", mp);
 	a = check_accessibility(mp);
 	if (a == 1)
 		errmsg_and_exit("not all collectable/exit accessable\n", mp);

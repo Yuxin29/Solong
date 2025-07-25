@@ -50,7 +50,7 @@ void	texture_path(t_map *mp)
 	mlx_delete_texture(png);
 	if (!mp->tex->img_empty || !mp->tex->img_wall || !mp->tex->img_exit
 		|| !mp->tex->img_player || !mp->tex->img_collectable)
-		errmsg_and_exit("Image_collectable loading failed\n", mp);
+		errmsg_and_exit("Image loading failed\n", mp);
 }
 
 void	init_background(t_map *mp)

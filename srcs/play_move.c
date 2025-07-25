@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "MLX42/MLX42.h"
 
 //be called every time when the keyboard control turned out to be a valid one
 void	map_normal_move(t_map *mp, int x, int y)
@@ -33,13 +32,11 @@ void	map_collecting_move(t_map *mp, int x, int y)
 		i = 0;
 		while (i < mp->counter[1])
 		{
-			if (mp->tex->img_collectable->instances[i].x == x * IMGSIZE)
+			if (mp->tex->img_collectable->instances[i].x == x * IMGSIZE
+				&& mp->tex->img_collectable->instances[i].y == y * IMGSIZE)
 			{
-				if (mp->tex->img_collectable->instances[i].y == y * IMGSIZE)
-				{
-					mp->tex->img_collectable->instances[i].enabled = false;
-					break ;
-				}
+				mp->tex->img_collectable->instances[i].enabled = false;
+				break ;
 			}
 			i++;
 		}
@@ -51,7 +48,7 @@ void	map_exit_move(t_map *mp, int x, int y)
 {
 	if (mp->arr_2d[y][x] == 'E' && mp->counter[0] == mp->counter[1])
 	{
-		ft_putstr_fd("Victory\n", 1);
+		ft_putstr_fd("You won the game\n", 1);
 		mlx_close_window(mp->mlx);
 	}
 }
@@ -83,6 +80,7 @@ void	keyboard_control(mlx_key_data_t	keydata, void *param)
 	if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		mlx_close_window(mp->mlx);
+		ft_putstr_fd("You quited early\n", 1);
 		return ;
 	}
 	else if (keydata.key == MLX_KEY_UP)

@@ -61,8 +61,6 @@ int	check_rectangular(t_map *mp)
 	while (mp->arr_2d[i])
 	{
 		line_width = ft_strlen(mp->arr_2d[i]);
-		if (mp->arr_2d[i][line_width] == '\n')
-			line_width--;
 		if (line_width != mp->dimension[1])
 			return (1);
 		i++;

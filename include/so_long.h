@@ -74,9 +74,8 @@ main.c        --->  +--------------------------+			|
 # include <stdlib.h>
 # include <fcntl.h>
 # include "libft.h"
-# include "get_next_line.h"
+# include "get_next_line/get_next_line.h"
 # include "MLX42/MLX42.h"
-//# include <MLX42/include/MLX42/MLX42.h>
 
 //graphics macros
 # define IMGSIZE 64
@@ -123,17 +122,17 @@ t_map	*init_map(char *file_name);
 //map precheck
 // mapcheck.c
 int		get_element_number(char c, t_map *mp);
-int		check_elements(t_map *mp);	//11  1 as error and  0 as ok
-int		check_rectangular(t_map *mp); //12,  0 as ok
-int		check_closure(t_map *mp); //13,  0 as ok	
-int		check_size(t_map *mp);	//14,  0 as ok
+int		check_elements(t_map *mp);
+int		check_rectangular(t_map *mp);
+int		check_closure(t_map *mp);
+int		check_size(t_map *mp);
 
 //map postcheck
 //accessibility_check.c
-void	copy_all_ints(t_map *mp_cp, t_map *mp);
 t_map	*map_copy(t_map *mp);
 void	flood_fill(t_map *mp, int x, int y);
-int		check_accessibility(t_map *mp);	//15,  0 as ok
+int		check_accessibility(t_map *mp);
+int		check_invalid_chars(t_map *mp);
 
 //map mlx window, texture and instance initiation
 //init_mlx.c
