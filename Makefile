@@ -12,63 +12,70 @@
 
 NAME := so_long
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -Iinclude -Ilibft/libft_0/include -Ilibft/Ft_printf/include
 
 # Paths
 SRC_DIR := srcs
-LIBFT_PATH := ./libft/
-GNL_DIR := libft/get_next_line
 MLX_DIR := MLX42
 MLX_BUILD := $(MLX_DIR)/build
 
-# Includes & Libs
-MLX_INCLUDE := -I$(MLX_DIR)/include
-MLX_LIB_FILE := $(MLX_BUILD)/libmlx42.a
-MLX_LIBS := -L$(MLX_BUILD) -lmlx42 -ldl -lglfw -pthread -lm
-LIBFT := $(LIBFT_PATH)libft.a
+# Libft setup
+LIBFT_REPO := https://github.com/Yuxin29/Mini_C_Library.git
+LIBFT_DIR := libft
+LIBFT_A := $(LIBFT_DIR)/libft_0/libft.a
+PRINTF_A := $(LIBFT_DIR)/Ft_printf/libftprintf.a
+GNL_A := $(LIBFT_DIR)/Get_next_line/get_next_line.a
+
+# Final linked libs
+LIBS := $(LIBFT_A) $(PRINTF_A) $(GNL_A)
 
 # Sources
-GNL_SRC := $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
+GNL_SRC := $(LIBFT_DIR)/Get_next_line/get_next_line.c $(LIBFT_DIR)/Get_next_line/get_next_line_utils.c
 SRCS := \
-	$(SRC_DIR)/init_map.c \
-	$(SRC_DIR)/mapcheck.c \
-	$(SRC_DIR)/accessibility_check.c \
-	$(SRC_DIR)/init_mlx.c \
-	$(SRC_DIR)/play_move.c \
-	$(SRC_DIR)/utils.c \
-	$(SRC_DIR)/main.c \
+	$(wildcard $(SRC_DIR)/*.c) \
 	$(GNL_SRC)
 OBJS := $(SRCS:.c=.o)
 
 # Includes
-CFLAGS += $(MLX_INCLUDE) -Iinclude -Ilibft -I$(GNL_DIR)
+CFLAGS += -I$(MLX_DIR)/include -Iinclude -Ilibft -I$(LIBFT_DIR)/Get_next_line
 
-all: $(MLX_LIB_FILE) $(LIBFT) $(NAME)
+all: $(MLX_DIR) $(LIBS) $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(MLX_LIB_FILE)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_LIBS) -o $(NAME)
+$(NAME): $(OBJS) $(LIBS) $(MLX_DIR)/build/libmlx42.a
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -L$(MLX_DIR)/build -lmlx42 -ldl -lglfw -pthread -lm -o $(NAME)
 
-$(LIBFT):
-	$(MAKE) all -C $(LIBFT_PATH)
+# Ensure objects wait for libs to be built
+$(OBJS): | $(LIBS)
 
+# Clone and make libft libs if needed
+$(LIBS):
+	if [ ! -d $(LIBFT_DIR) ]; then \
+		echo "Cloning Mini_C_Library..."; \
+		git clone $(LIBFT_REPO) $(LIBFT_DIR); \
+	fi
+	$(MAKE) -C $(LIBFT_DIR)
+
+# Clone MLX42 if not exists
 $(MLX_DIR):
 	git clone https://github.com/codam-coding-college/MLX42.git $(MLX_DIR)
 
-$(MLX_LIB_FILE): | $(MLX_DIR)
+# Build MLX42
+$(MLX_DIR)/build/libmlx42.a: | $(MLX_DIR)
 	cmake -B $(MLX_BUILD) -S $(MLX_DIR)
 	make -C $(MLX_BUILD) -j4
 
 clean:
 	rm -f $(OBJS)
-	rm -f $(GNL_DIR)/*.o
-	$(MAKE) clean -C $(LIBFT_PATH)
+	rm -f $(LIBFT_DIR)/Get_next_line/*.o
+	$(MAKE) clean -C $(LIBFT_DIR)
+	rm -rf $(MLX_DIR)/build
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) fclean -C $(LIBFT_PATH)
+	$(MAKE) fclean -C $(LIBFT_DIR)
 	rm -rf $(MLX_DIR)
+	rm -rf $(LIBFT_DIR)
 
 re: fclean all
 
 .PHONY: all clean fclean re
-

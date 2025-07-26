@@ -74,7 +74,7 @@ main.c        --->  +--------------------------+			|
 # include <stdlib.h>
 # include <fcntl.h>
 # include "libft.h"
-# include "get_next_line/get_next_line.h"
+# include "get_next_line.h"
 # include "MLX42/MLX42.h"
 
 //graphics macros
