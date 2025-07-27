@@ -80,8 +80,7 @@ void	keyboard_control(mlx_key_data_t	keydata, void *param)
 	if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		mlx_close_window(mp->mlx);
-		ft_putstr_fd("You quited early\n", 1);
-		return ;
+		return (ft_putstr_fd("You quited early\n", 1));
 	}
 	else if (keydata.key == MLX_KEY_UP)
 		y_new = mp->player_location[0] - 1;
