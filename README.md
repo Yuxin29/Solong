@@ -54,27 +54,15 @@ Example:
 ### 🏗️ Compilation
 
 1. Navigate to the project directory:
-
-```bash
 cd so_long
-
-    Compile using the provided Makefile:
-
-make
-
-This will generate the executable so_long.
-💡 Clean Build
-
-Available make commands:
-
+2. Compile using the provided Makefile:
+make            # Generate the executable so_long
+3. Available make commands:
 make clean     # Remove object files
 make fclean    # Remove object files and executable
 make re        # Recompile everything from scratch
-
-▶️ Running the Game
-
+4. Running the Game
 Run the game with a valid .ber map:
-
 ./so_long path/to/map.ber
 
 
