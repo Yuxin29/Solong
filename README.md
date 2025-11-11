@@ -50,11 +50,31 @@ Example:
 - [MLX42](https://github.com/codam-coding-college/MLX42)
 - `libft` and `get_next_line` included
 
-### 🧱 Installation
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/yourusername/so_long.git
-   cd so_long
+### 🏗️ Compilation
+
+1. Navigate to the project directory:
+
+```bash
+cd so_long
+
+    Compile using the provided Makefile:
+
+make
+
+This will generate the executable so_long.
+💡 Clean Build
+
+Available make commands:
+
+make clean     # Remove object files
+make fclean    # Remove object files and executable
+make re        # Recompile everything from scratch
+
+▶️ Running the Game
+
+Run the game with a valid .ber map:
+
+./so_long path/to/map.ber
 
 
