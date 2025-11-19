@@ -49,15 +49,29 @@ Example:
 ### Compilation
 
 1. Navigate to the project directory:
-cd so_long
+
+```
+git clone https://github.com/Yuxin29/Solong.git
+cd Solong
+```
+
 2. Compile using the provided Makefile:
+
+```
 make            # Generate the executable so_long
-3. Available make commands:
+```
+
+3. Other make commands:
+```
 make clean     # Remove object files
 make fclean    # Remove object files and executable
 make re        # Recompile everything from scratch
+```
+
 4. Running the Game
 Run the game with a valid .ber map:
-./so_long path/to/map.ber
 
+```
+./so_long path/to/map.ber
+```
 
