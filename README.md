@@ -1,23 +1,23 @@
-# 🕹️ so_long
+# so_long
 
 **so_long** is a simple 2D top-down game built with the [MLX42](https://harm-smits.github.io/42docs/libs/minilibx) graphical library, as part of the 42 core curriculum. The game involves parsing and rendering a map, handling player movement, collecting items, and reaching an exit — all while ensuring proper memory management and error handling.
 ![Gameplay animation](assets/gameplay.gif)
 
 ---
 
-## 📦 Features
+## Features
 
-- 🧱 Map parsing from `.ber` files with full validation
-- ✅ Real-time keyboard controls
-- 🧊 2D rendering using textures via MLX42
-- 🎮 Win condition tracking and step counter
-- 🧠 Flood-fill algorithm for accessibility validation
-- 💥 Graceful error handling and memory cleanup
-- 🖼️ Dynamic texture loading and player tracking
+- Map parsing from `.ber` files with full validation
+- Real-time keyboard controls
+- 2D rendering using textures via MLX42
+- Win condition tracking and step counter
+- Flood-fill algorithm for accessibility validation
+- Graceful error handling and memory cleanup
+- Dynamic texture loading and player tracking
 
 ---
 
-## 🗺️ Game Rules
+## Game Rules
 
 - The player (`P`) must collect all collectables (`C`)
 - Then reach the exit (`E`) to win
@@ -27,7 +27,7 @@
 
 ---
 
-## 📁 Map Format (`.ber`)
+## Map Format (`.ber`)
 
 A valid map file must:
 - Be rectangular
