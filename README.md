@@ -3,7 +3,6 @@
 **so_long** is a simple 2D top-down game built with the [MLX42](https://harm-smits.github.io/42docs/libs/minilibx) graphical library, as part of the 42 core curriculum. The game involves parsing and rendering a map, handling player movement, collecting items, and reaching an exit — all while ensuring proper memory management and error handling.
 ![Gameplay animation](assets/gameplay.gif)
 
----
 
 ## Features
 
@@ -15,7 +14,6 @@
 - Graceful error handling and memory cleanup
 - Dynamic texture loading and player tracking
 
----
 
 ## Game Rules
 
@@ -25,7 +23,6 @@
 - Empty spaces (`0`) are walkable
 - Game ends with a win or window close
 
----
 
 ## Map Format (`.ber`)
 
@@ -42,17 +39,14 @@ Example:
 111111
 
 
----
+## Build & Run
 
-## 🚀 Build & Run
-
-### ⚙️ Requirements
+### Requirements
 - `gcc` or `clang`
 - [MLX42](https://github.com/codam-coding-college/MLX42)
 - `libft` and `get_next_line` included
 
-
-### 🏗️ Compilation
+### Compilation
 
 1. Navigate to the project directory:
 cd so_long
