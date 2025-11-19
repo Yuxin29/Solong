@@ -41,17 +41,10 @@ Example:
 
 ## Build & Run
 
-### Requirements
-- `gcc` or `clang`
-- [MLX42](https://github.com/codam-coding-college/MLX42)
-- `libft` and `get_next_line` included
-
-### Compilation
-
 1. Navigate to the project directory:
 
 ```
-git clone https://github.com/Yuxin29/Solong.git
+git clone https://github.com/Yuxin29/Solong.git Solong
 cd Solong
 ```
 
